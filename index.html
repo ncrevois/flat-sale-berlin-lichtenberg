@@ -1,0 +1,494 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Alles muss raus: Wohnungsauflösung in Berlin</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,500;12..96,700;12..96,800&family=Instrument+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --page:#EEF1F0; --card:#FFFFFF; --ink:#15213B; --muted:#586377; --line:#D3D9DE;
+  --flyer:#FFE94A; --flyer-ink:#15213B; --mark:#FFE94A; --mark-ink:#15213B;
+  --now:#157A4E; --later:#2A55C7; --gone:#7B8494; --stage:#0E1522;
+  --display:"Bricolage Grotesque","Arial Narrow","Helvetica Neue",Arial,sans-serif;
+  --body:"Instrument Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --page:#0F141E; --card:#19202E; --ink:#EDF0F5; --muted:#A3ACBC; --line:#2B3446;
+    --now:#4CC68C; --later:#93B2FF; --gone:#8791A3; --stage:#070A11;
+  }
+}
+:root[data-theme="dark"]{
+  --page:#0F141E; --card:#19202E; --ink:#EDF0F5; --muted:#A3ACBC; --line:#2B3446;
+  --now:#4CC68C; --later:#93B2FF; --gone:#8791A3; --stage:#070A11;
+}
+*,*::before,*::after{box-sizing:inherit}
+html{scroll-padding-top:env(safe-area-inset-top,0px);-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--page);color:var(--ink);font-family:var(--body);font-size:1rem;line-height:1.5}
+img{max-width:100%;display:block}
+button{font:inherit;color:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--later);outline-offset:2px}
+.wrap{max-width:72rem;margin:0 auto;padding:0 1rem}
+
+/* top bar */
+.top{display:flex;justify-content:flex-end;padding:.75rem 0}
+.lang{display:inline-flex;border:1.5px solid var(--ink);border-radius:999px;overflow:hidden}
+.lang button{border:0;background:transparent;padding:.3rem .8rem;font-weight:600;font-size:.875rem}
+.lang button[aria-pressed="true"]{background:var(--ink);color:var(--page)}
+
+/* the flyer */
+.flyer{background:var(--flyer);color:var(--flyer-ink);border-radius:3px;box-shadow:0 1px 0 rgba(0,0,0,.18),0 14px 30px -18px rgba(10,20,40,.55)}
+.flyer-body{padding:1.5rem 1.25rem 1.25rem}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(2.9rem,13vw,6.5rem);line-height:.9;letter-spacing:-.035em;margin:0 0 1rem;font-variation-settings:"opsz" 96}
+.lead{font-size:1.125rem;line-height:1.45;max-width:38rem;margin:0 0 1.25rem;font-weight:500}
+.legend{list-style:none;margin:0;padding:0;display:grid;gap:.5rem;max-width:40rem;font-size:.95rem}
+.legend li{display:grid;grid-template-columns:auto 1fr;gap:.6rem;align-items:start}
+.legend b{font-weight:600}
+.dot{width:.7rem;height:.7rem;border-radius:50%;display:inline-block;flex:none;margin-top:.4rem}
+.flyer .dot{box-shadow:0 0 0 2px var(--flyer-ink)}
+.dot.now{background:#18A368}.dot.later{background:#3D6BE8}.dot.reserved{background:#E08A1E}.dot.sold{background:var(--gone)}
+
+/* tear-off strip: category filter */
+.strip{display:flex;border-top:2px dashed var(--flyer-ink)}
+.strip button{flex:1 1 0;min-width:0;height:7.25rem;border:0;border-left:2px dashed var(--flyer-ink);background:transparent;color:var(--flyer-ink);padding:.5rem 0;display:flex;align-items:center;justify-content:center}
+.strip button:first-child{border-left:0}
+.strip span{writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--display);font-weight:700;font-size:1.05rem;letter-spacing:.01em;white-space:nowrap}
+.strip button[aria-pressed="true"]{background:var(--flyer-ink);color:var(--flyer)}
+.strip button:hover:not([aria-pressed="true"]){background:rgba(21,33,59,.1)}
+.strip button:focus-visible{outline-offset:-4px;outline-color:var(--flyer-ink)}
+.strip button[aria-pressed="true"]:focus-visible{outline-color:var(--flyer)}
+
+/* availability filter */
+.bar{display:flex;flex-wrap:wrap;gap:.75rem 1rem;align-items:center;justify-content:space-between;margin:1.5rem 0 1rem}
+.seg{display:flex;flex-wrap:wrap;gap:.4rem}
+.seg button{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:.4rem .85rem;font-size:.9rem;font-weight:500;display:inline-flex;align-items:center;gap:.45rem}
+.seg button .dot{margin:0}
+.seg button[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--page)}
+.count{color:var(--muted);font-size:.9rem;margin:0}
+
+/* grid */
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:.75rem;list-style:none;margin:0;padding:0}
+@media (min-width:44rem){.grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:1rem}}
+@media (min-width:64rem){.grid{grid-template-columns:repeat(4,minmax(0,1fr));gap:1.25rem}}
+.item{background:var(--card);border-radius:6px;overflow:hidden;display:flex;flex-direction:column;border:1px solid var(--line)}
+.item button{all:unset;cursor:pointer;display:flex;flex-direction:column;height:100%;width:100%}
+.item button:focus-visible{outline:3px solid var(--later);outline-offset:-3px}
+.ph{position:relative;aspect-ratio:4/5;background:var(--line);overflow:hidden}
+.ph img{width:100%;height:100%;object-fit:cover}
+.more{position:absolute;right:.4rem;bottom:.4rem;background:rgba(14,21,34,.78);color:#fff;font-size:.75rem;font-weight:600;padding:.1rem .45rem;border-radius:999px}
+.stamp{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(14,21,34,.5)}
+.stamp span{font-family:var(--display);font-weight:800;font-size:1.4rem;color:#fff;border:3px solid #fff;padding:.1rem .7rem;transform:rotate(-8deg);border-radius:4px}
+.item.is-sold .ph img{filter:grayscale(1)}
+.meta{padding:.65rem .7rem .8rem;display:flex;flex-direction:column;gap:.3rem;flex:1}
+.no{font-size:.78rem;color:var(--muted);font-weight:500}
+.name{font-family:var(--display);font-weight:700;font-size:1.02rem;line-height:1.2;margin:0}
+.price{align-self:flex-start;background:var(--mark);color:var(--mark-ink);font-family:var(--display);font-weight:800;font-size:1.05rem;padding:.05rem .4rem;border-radius:2px;margin-top:.1rem}
+.price small{font-weight:500;font-size:.75rem}
+.is-sold .price{text-decoration:line-through;background:transparent;color:var(--muted);padding-left:0}
+.st{display:flex;gap:.4rem;align-items:flex-start;font-size:.82rem;color:var(--muted);margin-top:auto;padding-top:.25rem;line-height:1.3}
+.st .dot{width:.6rem;height:.6rem;margin-top:.25rem}
+.empty{grid-column:1/-1;padding:2rem 0;color:var(--muted)}
+
+/* info */
+.info{margin:3rem 0 2rem;display:grid;gap:1.5rem}
+@media (min-width:52rem){.info{grid-template-columns:1fr 1fr;gap:3rem}}
+.info h2{font-family:var(--display);font-weight:800;font-size:1.6rem;line-height:1.1;letter-spacing:-.01em;margin:0 0 .75rem}
+.info p{margin:0 0 .75rem;max-width:34rem}
+.fine{color:var(--muted);font-size:.875rem}
+footer{padding:0 0 2.5rem}
+
+/* detail dialog */
+dialog{border:0;padding:0;background:var(--card);color:var(--ink);width:min(44rem,100%);max-width:100%;max-height:100%;border-radius:8px;overflow:auto}
+dialog::backdrop{background:rgba(7,10,17,.72)}
+@media (max-width:44rem){dialog{width:100%;height:100%;border-radius:0;margin:0;max-height:none;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}}
+.stage{position:relative;background:var(--stage)}
+.gal{display:flex;overflow-x:auto;scroll-snap-type:x mandatory;scrollbar-width:none}
+.gal::-webkit-scrollbar{display:none}
+.gal figure{flex:0 0 100%;margin:0;scroll-snap-align:center;display:flex;align-items:center;justify-content:center;height:min(62vh,34rem)}
+.gal img{max-height:100%;max-width:100%;object-fit:contain}
+.nav{position:absolute;top:50%;transform:translateY(-50%);width:2.6rem;height:2.6rem;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:#15213B;font-size:1.3rem;line-height:1;display:flex;align-items:center;justify-content:center}
+.nav.prev{left:.6rem}.nav.next{right:.6rem}
+.nav[hidden]{display:none}
+.pos{position:absolute;left:50%;bottom:.6rem;transform:translateX(-50%);background:rgba(14,21,34,.78);color:#fff;font-size:.8rem;font-weight:600;padding:.1rem .6rem;border-radius:999px}
+.close{position:absolute;top:.6rem;right:.6rem;width:2.6rem;height:2.6rem;border-radius:50%;border:0;background:rgba(255,255,255,.92);color:#15213B;font-size:1.5rem;line-height:1;display:flex;align-items:center;justify-content:center}
+.sheet{padding:1.1rem 1.25rem 1.5rem}
+.sheet .no{font-size:.875rem}
+.sheet h2{font-family:var(--display);font-weight:800;font-size:1.7rem;line-height:1.1;margin:.15rem 0 .6rem;letter-spacing:-.01em}
+.sheet .row{display:flex;flex-wrap:wrap;gap:.6rem 1rem;align-items:center;margin-bottom:.9rem}
+.sheet .price{font-size:1.35rem;margin:0}
+.sheet .st{margin:0;padding:0;font-size:.95rem;color:var(--ink);align-items:center}
+.sheet .st .dot{margin:0;width:.7rem;height:.7rem}
+.sheet p{margin:0 0 .8rem;max-width:36rem}
+.how{border-top:1px solid var(--line);padding-top:.9rem;margin-top:1rem;color:var(--muted);font-size:.95rem}
+.how strong{color:var(--ink)}
+.sheet a{color:var(--later);font-weight:600}
+.cta{display:inline-block;background:var(--ink);color:var(--page)!important;font-weight:600;text-decoration:none;padding:.7rem 1.3rem;border-radius:999px;margin:0 0 .6rem}
+.how .cta{display:block;text-align:center;max-width:22rem}
+@media (prefers-reduced-motion:no-preference){.gal{scroll-behavior:smooth}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <div class="lang" role="group" aria-label="Sprache / Language">
+      <button type="button" data-lang="de" aria-pressed="true">Deutsch</button>
+      <button type="button" data-lang="en" aria-pressed="false">English</button>
+    </div>
+  </div>
+
+  <header class="flyer">
+    <div class="flyer-body">
+      <h1 data-t="h1"></h1>
+      <p class="lead" data-t="lead"></p>
+      <ul class="legend">
+        <li><span class="dot now"></span><span><b data-t="nowLabel"></b> <span data-t="nowText"></span></span></li>
+        <li><span class="dot later"></span><span><b data-t="laterLabel"></b> <span data-t="laterText"></span></span></li>
+      </ul>
+    </div>
+    <nav class="strip" id="cats" aria-label="Kategorien"></nav>
+  </header>
+
+  <main>
+    <div class="bar">
+      <div class="seg" id="avail" role="group"></div>
+      <p class="count" id="count" aria-live="polite"></p>
+    </div>
+    <ul class="grid" id="grid"></ul>
+
+    <section class="info">
+      <div>
+        <h2 data-t="howTitle"></h2>
+        <p data-t="how1"></p>
+        <p data-t="how2"></p>
+        <p data-t="how3"></p>
+        <p><a class="cta" id="formAll" target="_blank" rel="noopener noreferrer" data-t="requestAll"></a></p>
+      </div>
+      <div>
+        <h2 data-t="goodTitle"></h2>
+        <p data-t="good1"></p>
+        <p data-t="good2"></p>
+        <p class="fine" data-t="fine"></p>
+        <p class="fine" data-t="privacy"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer><p class="fine" data-t="updated"></p></footer>
+</div>
+
+<dialog id="dlg" aria-labelledby="dTitle">
+  <div class="stage">
+    <div class="gal" id="gal" tabindex="0"></div>
+    <button type="button" class="nav prev" id="prev" aria-label="Vorheriges Foto">&#8249;</button>
+    <button type="button" class="nav next" id="next" aria-label="Nächstes Foto">&#8250;</button>
+    <span class="pos" id="pos"></span>
+    <button type="button" class="close" id="close" aria-label="Schließen">&times;</button>
+  </div>
+  <div class="sheet">
+    <span class="no" id="dNo"></span>
+    <h2 id="dTitle"></h2>
+    <div class="row"><span class="price" id="dPrice"></span><span class="st" id="dSt"></span></div>
+    <p id="dDesc"></p>
+    <p id="dLink"></p>
+    <p class="how" id="dHow"></p>
+  </div>
+</dialog>
+
+<script>
+/* ============================================================
+   ITEMS: the only place item data lives.
+   To change an item, find its line, e.g.  {n:13, ... st:"later", price:120
+     status:  st:"now"  st:"later"  st:"reserved"  st:"sold"
+     price:   price:100   (a plain number, no € sign, no quotes)
+   Only change the word or number. Keep the quotes, commas and brackets.
+   If something breaks, the old version stays online and GitHub emails you.
+   The "Last updated" date is set automatically when you save.
+   ============================================================ */
+const UPDATED = {de:"4. Oktober 2026", en:"4 October 2026"};
+const ITEMS = [
+ {n:1, cat:"living", st:"reserved", price:45, img:["8195"],
+  de:{t:"Plattenspieler mit Holzgehäuse", d:"Plattenspieler im Holz-Look mit Staubschutzhaube. Funktioniert einwandfrei."},
+  en:{t:"Record player, wood finish", d:"Turntable with a wood-look body and dust cover. Works perfectly."}},
+ {n:2, cat:"living", st:"reserved", price:50, img:["8248","8247","8197"],
+  link:"https://www.amazon.de/dp/B0F8TVYNNC",
+  de:{t:"Plattenregal auf Rollen", d:"Regal von LIFEZEAL im Industrial-Stil mit Metallgestell, Halter für Schallplatten und zwei Holzablagen. Auf Rollen. Ca. 45 cm breit, 52 cm tief, 75 cm hoch, trägt bis 50 kg. Neupreis 70 €."},
+  en:{t:"Record player stand on wheels", d:"Industrial-style LIFEZEAL stand with a metal frame, a vinyl holder and two wooden shelves. On wheels. Approx. 45 cm wide, 52 cm deep, 75 cm high, holds up to 50 kg. 70 € new."}},
+ {n:3, cat:"living", st:"now", price:10, img:["8201","8202"],
+  link:"https://www.home24.de/produkt/leinwandbild-3-tlg-weltkarte-textil-120-x-80-x-2-cm-6ea1",
+  de:{t:"Weltkarte auf Leinwand, dreiteilig, ca. 120 × 80 cm", d:"Leinwandbild mit Weltkarte im Vintage-Look, drei Teile, zusammen ca. 120 × 80 cm. Auf einen Holzrahmen gespannt, fertig zum Aufhängen. Wir haben unsere Reisen mit kleinen Pins markiert. Deshalb gibt es ein paar winzige Löcher, die man aus einem Meter Abstand kaum sieht."},
+  en:{t:"World map on canvas, three panels, approx. 120 × 80 cm", d:"Canvas print with a vintage-style world map, three panels, approx. 120 × 80 cm together. Stretched over a wooden frame, ready to hang. We marked our travels with small pins, so there are a few tiny holes that you can barely see from a metre away."}},
+ {n:5, cat:"living", st:"now", price:25, img:["8210","8211","8212"],
+  de:{t:"Bücherregal, Vintage-Braun", d:"Regal mit sechs Fächern in rustikaler Holzoptik. Ohne Inhalt und Pflanzen."},
+  en:{t:"Bookshelf, rustic brown", d:"Six-compartment shelf in a rustic wood finish. Contents and plants not included."}},
+ {n:6, cat:"living", st:"now", price:60, img:["8233"],
+  de:{t:"Runder Esstisch mit zwei Stühlen", d:"Runder Holztisch mit zwei passenden Stühlen und Sitzkissen."},
+  en:{t:"Round dining table with two chairs", d:"Round wooden table with two matching chairs and seat cushions."}},
+ {n:7, cat:"living", st:"now", price:15, img:["8264"],
+  de:{t:"Beistelltisch auf Rollen", d:"Beistelltisch in C-Form, passt über Sofa oder Bett. Holzoptik mit schwarzem Metallgestell."},
+  en:{t:"Side table on wheels", d:"C-shaped side table that slides over a sofa or bed. Wood finish with a black metal frame."}},
+ {n:8, cat:"living", st:"now", price:15, img:["8265"],
+  de:{t:"Laptoptisch mit Glasplatte, weiß", d:"Schmaler Beistell- oder Laptoptisch mit Glasplatte und weißem Metallgestell."},
+  en:{t:"Laptop table with glass top, white", d:"Slim side or laptop table with a glass top and white metal frame."}},
+ {n:9, cat:"living", st:"now", price:15, img:["8270"],
+  de:{t:"Beistelltisch aus Bambus mit Korb", d:"Kleiner Tisch mit Glasplatte und Ablage, inklusive Korb."},
+  en:{t:"Bamboo side table with basket", d:"Small table with a glass top and lower shelf, basket included."}},
+ {n:10, cat:"living", st:"now", price:10, img:["8209"],
+  de:{t:"Wandregal, weiß mit Holzkonsolen", d:"Wandbrett in Weiß mit zwei Holzkonsolen. Ohne Pflanzen."},
+  en:{t:"Wall shelf, white with wooden brackets", d:"White wall shelf with two wooden brackets. Plants not included."}},
+ {n:11, cat:"office", st:"now", price:15, img:["8215"],
+  de:{t:"Whiteboard für die Wand", d:"Großes Whiteboard zur Wandmontage."},
+  en:{t:"Wall-mounted whiteboard", d:"Large whiteboard for wall mounting."}},
+ {n:12, cat:"bedroom", st:"later", price:90, img:["8224","8225"],
+  de:{t:"Doppelbett, weiß, mit Schubladen", d:"Weißes Bettgestell mit hohem Kopfteil und Schubladen als Stauraum."},
+  en:{t:"Double bed, white, with drawers", d:"White bed frame with a tall headboard and storage drawers."}},
+ {n:13, cat:"bedroom", st:"later", price:120, img:["8235","8236"],
+  de:{t:"Massivholzbett", d:"Stabiles Bettgestell aus Massivholz, schlicht und ohne Kopfteil."},
+  en:{t:"Solid wood bed", d:"Sturdy solid wood bed frame, simple design without headboard."}},
+ {n:14, cat:"bedroom", st:"now", price:20, img:["8226","8227"],
+  de:{t:"Nachttisch mit zwei Schubladen", d:"Nachttisch in rustikaler Holzoptik mit schwarzen Griffen."},
+  en:{t:"Bedside table with two drawers", d:"Bedside table in a rustic wood finish with black handles."}},
+ {n:15, cat:"bedroom", st:"now", price:70, img:["8228","8230","8229"],
+  de:{t:"Kleiderschrank, weiß, drei Türen mit Spiegel", d:"Dreitüriger Schrank mit Spiegeltür, Kleiderstange und Fächern."},
+  en:{t:"Wardrobe, white, three doors with mirror", d:"Three-door wardrobe with a mirror door, hanging rail and shelves."}},
+ {n:16, cat:"bedroom", st:"now", price:20, img:["8213","8214"],
+  de:{t:"Kommode mit Stoffschubladen", d:"Leichte Kommode mit fünf Stoffschubladen und Holzplatte."},
+  en:{t:"Dresser with fabric drawers", d:"Lightweight dresser with five fabric drawers and a wooden top."}},
+ {n:17, cat:"bedroom", st:"now", price:40, img:["8237","8238"],
+  de:{t:"Schubladenelement, weiß", d:"Hohes Schubladenelement mit fünf Schubladen."},
+  en:{t:"Drawer unit, white", d:"Tall drawer unit with five drawers."}},
+ {n:18, cat:"living", st:"now", price:10, img:["8234"],
+  de:{t:"Garderobe mit Hutablage, weiß", d:"Wandgarderobe mit Ablage und Haken."},
+  en:{t:"Coat rack with shelf, white", d:"Wall-mounted coat rack with a shelf and hooks."}},
+ {n:19, cat:"bedroom", st:"now", price:15, img:["8266","8267"],
+  de:{t:"Vorhänge, hellgrau, zwei Stück", d:"Zwei Ösenvorhänge aus dichtem, hellgrauem Stoff."},
+  en:{t:"Curtains, light grey, set of two", d:"Two eyelet curtains in a dense light grey fabric."}},
+ {n:20, cat:"bedroom", st:"now", price:10, img:["8268","8269"],
+  de:{t:"Vorhang, blaugrau", d:"Dichter Vorhang in Blaugrau, dunkelt gut ab."},
+  en:{t:"Curtain, blue-grey", d:"Dense blue-grey curtain that darkens the room well."}},
+ {n:21, cat:"office", st:"later", price:150, img:["8240","8241","8242"],
+  de:{t:"Höhenverstellbarer Schreibtisch, elektrisch", d:"Weißer Steh-Sitz-Schreibtisch mit Motor und Speichertasten für mehrere Höhen."},
+  en:{t:"Electric standing desk", d:"White sit-stand desk with motor and memory buttons for several heights."}},
+ {n:22, cat:"office", st:"later", price:35, img:["8239"],
+  de:{t:"Schreibtisch mit Ablagen, Industrial-Stil", d:"Kompakter Schreibtisch in Holzoptik mit Metallgestell und zwei Ablagen. Verkauf ohne Stuhl und Monitor."},
+  en:{t:"Desk with shelves, industrial style", d:"Compact desk in a wood finish with a metal frame and two shelves. Chair and monitor sold separately."}},
+ {n:23, cat:"office", st:"later", price:80, img:["8216"],
+  de:{t:"Ergonomischer Bürostuhl mit Kopfstütze", d:"Bürostuhl mit Netzrücken, Kopfstütze und verstellbaren Armlehnen."},
+  en:{t:"Ergonomic office chair with headrest", d:"Office chair with a mesh back, headrest and adjustable armrests."}},
+ {n:24, cat:"office", st:"later", price:30, img:["8219"],
+  de:{t:"Bürostuhl, schwarz", d:"Gepolsterter Drehstuhl mit Armlehnen."},
+  en:{t:"Office chair, black", d:"Padded swivel chair with armrests."}},
+ {n:25, cat:"office", st:"now", price:40, img:["8217","8218"],
+  de:{t:"Dell-Monitor", d:"Dell-Monitor mit höhenverstellbarem Standfuß."},
+  en:{t:"Dell monitor", d:"Dell monitor with a height-adjustable stand."}},
+ {n:26, cat:"office", st:"now", price:80, img:["8244"],
+  de:{t:"Großer Monitor", d:"Großer Monitor mit schmalem Rahmen."},
+  en:{t:"Large monitor", d:"Large monitor with slim bezels."}},
+ {n:27, cat:"office", st:"now", price:60, img:["8245","8246"],
+  de:{t:"PreSonus Eris Studiomonitore, Paar", d:"Zwei aktive Lautsprecher für Schreibtisch oder Homestudio."},
+  en:{t:"PreSonus Eris studio monitors, pair", d:"Two powered speakers for a desk or home studio."}},
+ {n:28, cat:"balcony", st:"now", price:30, img:["8220"],
+  de:{t:"Balkonset: Klapptisch und zwei Stühle", d:"Klappbarer Bistrotisch mit zwei Klappstühlen und Sitzkissen."},
+  en:{t:"Balcony set: folding table and two chairs", d:"Folding bistro table with two folding chairs and seat cushions."}},
+ {n:29, cat:"balcony", st:"now", price:25, img:["8221"],
+  de:{t:"Balkonsessel in Rattanoptik", d:"Schwarzer Sessel in Rattanoptik mit hellen Polstern."},
+  en:{t:"Rattan-style balcony armchair", d:"Black rattan-style armchair with light cushions."}},
+ {n:30, cat:"balcony", st:"now", price:60, img:["8222","8223"],
+  de:{t:"Holzbank für zwei, mit Kissen", d:"Zweisitzer aus Holz für Balkon oder Garten, inklusive Sitz- und Rückenkissen."},
+  en:{t:"Wooden two-seater bench with cushions", d:"Wooden two-seater for a balcony or garden, seat and back cushions included."}},
+ {n:31, cat:"kitchen", st:"now", price:250, img:["8258"],
+  de:{t:"De'Longhi La Specialista Siebträgermaschine", d:"Espressomaschine mit eingebautem Mahlwerk, Manometer und Milchaufschäumer. Mit Tamper und Zubehör."},
+  en:{t:"De'Longhi La Specialista espresso machine", d:"Espresso machine with built-in grinder, pressure gauge and steam wand. Tamper and accessories included."}},
+ {n:32, cat:"kitchen", st:"now", price:50, img:["8260","8263"],
+  de:{t:"Tefal Pain & Délices Brotbackautomat", d:"Brotbackautomat mit 20 Programmen, auch für Joghurt und Teig."},
+  en:{t:"Tefal Pain & Délices bread maker", d:"Bread maker with 20 programmes, also makes yoghurt and dough."}},
+ {n:33, cat:"kitchen", st:"later", price:10, img:["8259"],
+  de:{t:"Wasserkocher und Toaster", d:"Wasserkocher und Toaster in Schwarz, zusammen."},
+  en:{t:"Kettle and toaster", d:"Black kettle and toaster, sold together."}},
+ {n:34, cat:"kitchen", st:"later", price:45, img:["8257","8256"],
+  de:{t:"WMF Messerblock mit Messern und Schere", d:"Holzblock von WMF mit fünf Messern und Küchenschere."},
+  en:{t:"WMF knife block with knives and scissors", d:"WMF wooden block with five knives and kitchen scissors."}},
+ {n:35, cat:"kitchen", st:"later", price:15, img:["8250"],
+  de:{t:"Teller und Schüsseln, komplett", d:"Flache Teller, tiefe Teller und Schüsseln in Schwarz und Grau. Alles zusammen."},
+  en:{t:"Plates and bowls, full set", d:"Dinner plates, deep plates and bowls in black and grey. Sold as one lot."}},
+ {n:36, cat:"kitchen", st:"later", price:10, img:["8251","8204"],
+  de:{t:"Gläser, Tassen und Vorratsdosen", d:"Trinkgläser, Biergläser, Tassen und Vorratsdosen aus Glas und Kunststoff. Alles zusammen."},
+  en:{t:"Glasses, mugs and food containers", d:"Drinking glasses, beer glasses, mugs and glass and plastic containers. Sold as one lot."}},
+ {n:37, cat:"kitchen", st:"later", price:15, img:["8249","8252"],
+  de:{t:"Pfanne, Schüsseln und Küchenhelfer", d:"Große Pfanne mit Glasdeckel, Rührschüsseln aus Edelstahl, Reibe und weitere Küchenhelfer. Alles zusammen."},
+  en:{t:"Pan, mixing bowls and utensils", d:"Large pan with glass lid, stainless steel mixing bowls, grater and other utensils. Sold as one lot."}},
+ {n:38, cat:"kitchen", st:"now", price:70, img:["8253","8254"],
+  de:{t:"Miele Staubsauger", d:"Bodenstaubsauger von Miele mit Rohr und Düse."},
+  en:{t:"Miele vacuum cleaner", d:"Miele canister vacuum with wand and floor head."}},
+ {n:39, cat:"kitchen", st:"now", price:150, img:["8255"],
+  de:{t:"Roborock Saugroboter mit Absaugstation", d:"Saugroboter von Roborock mit Station, die den Staubbehälter automatisch leert."},
+  en:{t:"Roborock robot vacuum with auto-empty dock", d:"Roborock robot vacuum with a dock that empties the dustbin automatically."}},
+ {n:40, cat:"plants", st:"now", price:5, from:true, img:["8207","8206","8208","8232"],
+  de:{t:"Zimmerpflanzen", d:"Ufopflanzen, Wunderstrauch, Efeutute und Grünlilien, mit Topf. Preis je nach Größe."},
+  en:{t:"House plants", d:"Pilea, croton, pothos and spider plants, pots included. Price depends on size."}}
+];
+
+const CATS = [
+  ["all",{de:"Alles",en:"All"}],["living",{de:"Wohnen",en:"Living"}],["bedroom",{de:"Schlafen",en:"Bedroom"}],
+  ["office",{de:"Büro",en:"Office"}],["balcony",{de:"Balkon",en:"Balcony"}],["kitchen",{de:"Küche",en:"Kitchen"}],
+  ["plants",{de:"Pflanzen",en:"Plants"}]
+];
+const T = {
+ de:{
+  title:"Alles muss raus: Wohnungsauflösung in Berlin",
+  h1:"Alles muss raus.",
+  lead:"Wir ziehen nach Chile und verkaufen unsere Wohnungseinrichtung in Berlin: Möbel, Technik, Küche, Balkon und Pflanzen.",
+  nowLabel:"Sofort abholbar:", nowText:"kannst du ab jetzt abholen.",
+  laterLabel:"Ab Mitte/Ende Oktober:", laterText:"brauchen wir noch bis zum Umzug. Jetzt reservieren, kurz vor unserer Abreise abholen.",
+  avAll:"Alle", avNow:"Sofort abholbar", avLater:"Ab Mitte/Ende Oktober",
+  st:{now:"Sofort abholbar", later:"Ab Mitte/Ende Oktober, jetzt reservierbar", reserved:"Reserviert", sold:"Verkauft"},
+  no:"Nr.", vb:"VB", from:"ab", photos:"Fotos",
+  count:(a,b)=>a===b?`${b} Sachen`:`${a} von ${b} Sachen`,
+  empty:"Hier ist gerade nichts. Wähle eine andere Kategorie.",
+  howTitle:"So läuft es",
+  how1:"Tippe auf eine Sache und dann auf „Anfragen“. Im Formular schreibst du uns, wie wir dich erreichen, was du möchtest und wann du abholen könntest.",
+  how2:"Wir versuchen, innerhalb von 24 Stunden zu antworten. Eine Anfrage ist noch keine Reservierung.",
+  how3:"Abholung in Berlin. Die genaue Adresse bekommst du per Nachricht. Kein Versand.",
+  requestAll:"Anfrage senden",
+  goodTitle:"Gut zu wissen",
+  good1:"Preise sind Verhandlungsbasis. Wer mehrere Sachen nimmt, bekommt einen besseren Preis.",
+  good2:"Sachen mit „Ab Mitte/Ende Oktober“ kannst du jetzt schon reservieren. Dafür bitten wir um eine Anzahlung von mindestens 50 %. Erst dann ist die Reservierung fest. Den genauen Abholtag geben wir rechtzeitig durch.",
+  fine:"Privatverkauf: keine Garantie, keine Rücknahme.",
+  privacy:"Datenschutz: Deine Kontaktdaten aus dem Formular nutzen wir nur für diesen Verkauf. Nur wir sehen sie. Nach dem Verkauf löschen wir alles.",
+  updated:"Zuletzt aktualisiert am ",
+  request:"Anfragen",
+  dHow:"Wir versuchen, innerhalb von 24 Stunden zu antworten. Eine Anfrage ist noch keine Reservierung.",
+  taken:"Diese Sache ist schon vergeben. Schau dir gern die anderen an.",
+  link:"Produktseite ansehen",
+  prev:"Vorheriges Foto", next:"Nächstes Foto", close:"Schließen", cats:"Kategorien", avail:"Verfügbarkeit"
+ },
+ en:{
+  title:"Everything must go: flat clearance in Berlin",
+  h1:"Everything must go.",
+  lead:"We're moving to Chile and selling the contents of our Berlin flat: furniture, tech, kitchen, balcony and plants.",
+  nowLabel:"Available now:", nowText:"you can pick it up right away.",
+  laterLabel:"From mid/end-October:", laterText:"we still need it until we move. Reserve now, pick up shortly before we leave.",
+  avAll:"All", avNow:"Available now", avLater:"From mid/end-October",
+  st:{now:"Available now", later:"From mid/end-October, reserve now", reserved:"Reserved", sold:"Sold"},
+  no:"No.", vb:"negotiable", from:"from", photos:"photos",
+  count:(a,b)=>a===b?`${b} things`:`${a} of ${b} things`,
+  empty:"Nothing here right now. Try another category.",
+  howTitle:"How it works",
+  how1:"Tap an item, then “Request”. In the form, tell us how to reach you, what you'd like and when you could pick it up.",
+  how2:"We try to reply within 24 hours. A request is not yet a reservation.",
+  how3:"Pickup in Berlin. You get the exact address by message. No shipping.",
+  requestAll:"Send a request",
+  goodTitle:"Good to know",
+  good1:"Prices are negotiable. Take several things and you get a better price.",
+  good2:"Things marked “From mid/end-October” can be reserved now. For these we ask for a deposit of at least 50%. Only then is the reservation fixed. We'll confirm the exact pickup day in good time.",
+  fine:"Private sale: no warranty, no returns.",
+  privacy:"Privacy: we only use the contact details from the form for this sale. Only we can see them. We delete everything after the sale.",
+  updated:"Last updated ",
+  request:"Request",
+  dHow:"We try to reply within 24 hours. A request is not yet a reservation.",
+  taken:"This item is already taken. Have a look at the others.",
+  link:"View product page",
+  prev:"Previous photo", next:"Next photo", close:"Close", cats:"Categories", avail:"Availability"
+ }
+};
+
+/* Request form (Google Form). The item button fills the message with "#<number>: ". */
+const FORM = "https://docs.google.com/forms/d/e/1FAIpQLSdIlmK7XPM_Rsx1PgjSR-jbQqa2_mL7N6Wypbrbvw32nTTGXQ/viewform";
+const formLink = n => n ? `${FORM}?usp=pp_url&entry.1976189261=${encodeURIComponent(`#${n}: `)}` : FORM;
+
+/* Photos live in ./img as <id>.jpg */
+const IMG = new Proxy({}, {get: (_, id) => `img/${String(id)}.jpg`});
+
+let lang = (navigator.language||"de").toLowerCase().startsWith("de") ? "de" : "en";
+let cat = "all", av = "all";
+const $ = s => document.querySelector(s);
+const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+const priceHTML = it => `${it.from ? T[lang].from+" " : ""}${it.price}&nbsp;€${it.from ? "" : ` <small>${T[lang].vb}</small>`}`;
+
+function renderStatic(){
+  const t = T[lang];
+  document.documentElement.lang = lang;
+  document.title = t.title;
+  document.querySelectorAll("[data-t]").forEach(el => {
+    const k = el.dataset.t;
+    el.textContent = k === "updated" ? t.updated + UPDATED[lang] + "." : t[k];
+  });
+  document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
+  $("#cats").setAttribute("aria-label", t.cats);
+  $("#cats").innerHTML = CATS.map(([id,l]) => `<button type="button" data-cat="${id}" aria-pressed="${id===cat}"><span>${l[lang]}</span></button>`).join("");
+  $("#avail").setAttribute("aria-label", t.avail);
+  $("#avail").innerHTML = [["all",t.avAll,""],["now",t.avNow,"now"],["later",t.avLater,"later"]]
+    .map(([id,l,d]) => `<button type="button" data-av="${id}" aria-pressed="${id===av}">${d?`<span class="dot ${d}"></span>`:""}${l}</button>`).join("");
+  $("#prev").setAttribute("aria-label", t.prev);
+  $("#next").setAttribute("aria-label", t.next);
+  $("#close").setAttribute("aria-label", t.close);
+}
+
+function renderGrid(){
+  const t = T[lang];
+  const list = ITEMS.filter(it => (cat==="all"||it.cat===cat) && (av==="all"||it.st===av));
+  $("#count").textContent = t.count(list.length, ITEMS.length);
+  $("#grid").innerHTML = list.length ? list.map(it => {
+    const gone = it.st==="sold"||it.st==="reserved";
+    return `<li class="item ${it.st==="sold"?"is-sold":""}"><button type="button" data-n="${it.n}" aria-label="${esc(it[lang].t)}, ${t.no} ${it.n}">
+      <div class="ph"><img loading="lazy" decoding="async" alt="" src="${IMG[it.img[0]]||""}">
+        ${it.img.length>1?`<span class="more">${it.img.length} ${t.photos}</span>`:""}
+        ${gone?`<span class="stamp"><span>${t.st[it.st]}</span></span>`:""}</div>
+      <div class="meta"><span class="no">${t.no} ${it.n}</span><h3 class="name">${esc(it[lang].t)}</h3>
+        <span class="price">${priceHTML(it)}</span>
+        <span class="st"><span class="dot ${it.st}"></span><span>${t.st[it.st]}</span></span></div>
+    </button></li>`;}).join("") : `<li class="empty">${t.empty}</li>`;
+}
+
+let current = null;
+function openItem(n){
+  const it = ITEMS.find(x => x.n === n); if(!it) return;
+  current = it; const t = T[lang];
+  $("#gal").innerHTML = it.img.map((id,i) => `<figure><img alt="${esc(it[lang].t)} (${i+1}/${it.img.length})" src="${IMG[id]||""}"></figure>`).join("");
+  $("#dNo").textContent = `${t.no} ${it.n}`;
+  $("#dTitle").textContent = it[lang].t;
+  $("#dPrice").innerHTML = priceHTML(it);
+  $("#dSt").innerHTML = `<span class="dot ${it.st}"></span><span>${t.st[it.st]}</span>`;
+  $("#dDesc").textContent = it[lang].d;
+  $("#dLink").innerHTML = it.link ? `<a href="${esc(it.link)}" target="_blank" rel="noopener noreferrer">${t.link}&nbsp;↗</a>` : "";
+  $("#dLink").hidden = !it.link;
+  $("#dHow").innerHTML = (it.st === "now" || it.st === "later")
+    ? `<a class="cta" href="${formLink(it.n)}" target="_blank" rel="noopener noreferrer">${t.request}: ${t.no} ${it.n}</a>${t.dHow}`
+    : t.taken;
+  const dlg = $("#dlg");
+  if(!dlg.open) dlg.showModal();
+  $("#gal").scrollLeft = 0; dlg.scrollTop = 0;
+  updatePos();
+}
+function galIndex(){ const g = $("#gal"); return Math.round(g.scrollLeft / Math.max(1,g.clientWidth)); }
+function updatePos(){
+  if(!current) return; const n = current.img.length, i = Math.min(n-1, galIndex());
+  $("#pos").textContent = `${i+1} / ${n}`; $("#pos").hidden = n < 2;
+  $("#prev").hidden = n < 2 || i === 0; $("#next").hidden = n < 2 || i === n-1;
+}
+function step(d){ const g = $("#gal"); g.scrollBy({left: d*g.clientWidth, behavior: "auto"}); setTimeout(updatePos, 60); }
+
+document.addEventListener("click", e => {
+  const b = e.target.closest("button"); if(!b) return;
+  if(b.dataset.lang){ lang = b.dataset.lang; renderStatic(); renderGrid(); if($("#dlg").open && current) openItem(current.n); }
+  else if(b.dataset.cat){ cat = b.dataset.cat; renderStatic(); renderGrid(); }
+  else if(b.dataset.av){ av = b.dataset.av; renderStatic(); renderGrid(); }
+  else if(b.dataset.n){ openItem(Number(b.dataset.n)); }
+  else if(b.id === "close"){ $("#dlg").close(); }
+  else if(b.id === "prev"){ step(-1); }
+  else if(b.id === "next"){ step(1); }
+});
+$("#gal").addEventListener("scroll", () => requestAnimationFrame(updatePos), {passive:true});
+$("#gal").addEventListener("keydown", e => { if(e.key==="ArrowRight"){step(1);e.preventDefault();} if(e.key==="ArrowLeft"){step(-1);e.preventDefault();} });
+$("#dlg").addEventListener("click", e => { if(e.target === $("#dlg")) $("#dlg").close(); });
+
+$("#formAll").href = formLink();
+renderStatic(); renderGrid();
+</script>
+</body>
+</html>
