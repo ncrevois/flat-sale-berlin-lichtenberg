@@ -349,11 +349,11 @@ const T = {
   st:{now:"Sofort abholbar", later:"Ab Mitte/Ende Oktober, jetzt reservierbar", reserved:"Reserviert", sold:"Verkauft"},
   no:"Nr.", vb:"VB", from:"ab", photos:"Fotos",
   count:(a,b)=>a===b?`${b} Sachen`:`${a} von ${b} Sachen`,
-  empty:"Hier ist gerade nichts. Wähle eine andere Kategorie.",
+  empty:"Mit diesem Filter gibt es hier nichts. Tippe oben auf „Alle“, um alles zu sehen.",
   howTitle:"So läuft es",
-  how1:"Tippe auf eine Sache und dann auf „Anfragen“. Im Formular schreibst du uns, wie wir dich erreichen, was du möchtest und wann du abholen könntest.",
+  how1:"Tippe auf eine Sache und dann auf „Diese Sache anfragen“. Im Formular schreibst du uns, wie wir dich erreichen, was du möchtest und wann du abholen könntest.",
   how2:"Wir versuchen, innerhalb von 24 Stunden zu antworten. Eine Anfrage ist noch keine Reservierung.",
-  how3:"Abholung in Berlin. Die genaue Adresse bekommst du per Nachricht. Kein Versand.",
+  how3:"Abholung in Berlin-Lichtenberg, nahe S-Bahnhof Storkower Straße. Die genaue Adresse bekommst du per Nachricht. Kein Versand.",
   requestAll:"Anfrage senden",
   goodTitle:"Gut zu wissen",
   good1:"Preise sind Verhandlungsbasis. Wer mehrere Sachen nimmt, bekommt einen besseren Preis.",
@@ -361,7 +361,7 @@ const T = {
   fine:"Privatverkauf: keine Garantie, keine Rücknahme.",
   privacy:"Datenschutz: Deine Kontaktdaten aus dem Formular nutzen wir nur für diesen Verkauf. Nur wir sehen sie. Nach dem Verkauf löschen wir alles.",
   updated:"Zuletzt aktualisiert am ",
-  request:"Anfragen",
+  request:"Diese Sache anfragen",
   dHow:"Wir versuchen, innerhalb von 24 Stunden zu antworten. Eine Anfrage ist noch keine Reservierung.",
   taken:"Diese Sache ist schon vergeben. Schau dir gern die anderen an.",
   link:"Produktseite ansehen",
@@ -377,11 +377,11 @@ const T = {
   st:{now:"Available now", later:"From mid/end-October, reserve now", reserved:"Reserved", sold:"Sold"},
   no:"No.", vb:"negotiable", from:"from", photos:"photos",
   count:(a,b)=>a===b?`${b} things`:`${a} of ${b} things`,
-  empty:"Nothing here right now. Try another category.",
+  empty:"Nothing here with this filter. Tap “All” above to see everything.",
   howTitle:"How it works",
-  how1:"Tap an item, then “Request”. In the form, tell us how to reach you, what you'd like and when you could pick it up.",
+  how1:"Tap an item, then “Request this item”. In the form, tell us how to reach you, what you'd like and when you could pick it up.",
   how2:"We try to reply within 24 hours. A request is not yet a reservation.",
-  how3:"Pickup in Berlin. You get the exact address by message. No shipping.",
+  how3:"Pickup in Berlin-Lichtenberg, near Storkower Straße S-Bahn station. You get the exact address by message. No shipping.",
   requestAll:"Send a request",
   goodTitle:"Good to know",
   good1:"Prices are negotiable. Take several things and you get a better price.",
@@ -389,7 +389,7 @@ const T = {
   fine:"Private sale: no warranty, no returns.",
   privacy:"Privacy: we only use the contact details from the form for this sale. Only we can see them. We delete everything after the sale.",
   updated:"Last updated ",
-  request:"Request",
+  request:"Request this item",
   dHow:"We try to reply within 24 hours. A request is not yet a reservation.",
   taken:"This item is already taken. Have a look at the others.",
   link:"View product page",
@@ -397,9 +397,9 @@ const T = {
  }
 };
 
-/* Request form (Google Form). The item button fills the message with "#<number>: ". */
+/* Request form (Google Form). The item button fills the message with "#<number> <English title> / <German title>: ". */
 const FORM = "https://docs.google.com/forms/d/e/1FAIpQLSdIlmK7XPM_Rsx1PgjSR-jbQqa2_mL7N6Wypbrbvw32nTTGXQ/viewform";
-const formLink = n => n ? `${FORM}?usp=pp_url&entry.1976189261=${encodeURIComponent(`#${n}: `)}` : FORM;
+const formLink = it => it ? `${FORM}?usp=pp_url&entry.1976189261=${encodeURIComponent(`#${it.n} ${it.en.t} / ${it.de.t}: `)}` : FORM;
 
 /* Photos live in ./img as <id>.jpg */
 const IMG = new Proxy({}, {get: (_, id) => `img/${String(id)}.jpg`});
@@ -458,7 +458,7 @@ function openItem(n){
   $("#dLink").innerHTML = it.link ? `<a href="${esc(it.link)}" target="_blank" rel="noopener noreferrer">${t.link}&nbsp;↗</a>` : "";
   $("#dLink").hidden = !it.link;
   $("#dHow").innerHTML = (it.st === "now" || it.st === "later")
-    ? `<a class="cta" href="${formLink(it.n)}" target="_blank" rel="noopener noreferrer">${t.request}: ${t.no} ${it.n}</a>${t.dHow}`
+    ? `<a class="cta" href="${formLink(it)}" target="_blank" rel="noopener noreferrer">${t.request}</a>${t.dHow}`
     : t.taken;
   const dlg = $("#dlg");
   if(!dlg.open) dlg.showModal();
