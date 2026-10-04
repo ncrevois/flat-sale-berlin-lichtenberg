@@ -37,7 +37,7 @@ for (const it of ITEMS) {
   if (typeof it.price !== "number") problems.push(`${who}: price must be a plain number like 40 (no quotes, no €).`);
   if (!Array.isArray(it.img) || !it.img.length) problems.push(`${who}: needs at least one photo.`);
   else for (const id of it.img) if (!fs.existsSync(`img/${id}.jpg`)) problems.push(`${who}: photo img/${id}.jpg does not exist.`);
-  if (it.link !== undefined && !/^https:\/\/\S+$/.test(it.link)) problems.push(`${who}: link must start with https:// and have no spaces.`);
+  for (const l of [].concat(it.link ?? [])) if (!/^https:\/\/\S+$/.test(typeof l === "string" ? l : l?.url)) problems.push(`${who}: link must start with https:// and have no spaces.`);
   for (const l of ["de", "en"]) if (!it[l] || typeof it[l].t !== "string" || typeof it[l].d !== "string")
     problems.push(`${who}: missing ${l} title or description.`);
 }
