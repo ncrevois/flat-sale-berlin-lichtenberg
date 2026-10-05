@@ -125,6 +125,7 @@ dialog::backdrop{background:rgba(7,10,17,.72)}
 .sheet .st{margin:0;padding:0;font-size:.95rem;color:var(--ink);align-items:center}
 .sheet .st .dot{margin:0;width:.7rem;height:.7rem}
 .sheet p{margin:0 0 .8rem;max-width:36rem}
+#dDesc{white-space:pre-line}
 .how{border-top:1px solid var(--line);padding-top:.9rem;margin-top:1rem;color:var(--muted);font-size:.95rem}
 .how strong{color:var(--ink)}
 .sheet a{color:var(--later);font-weight:600}
@@ -276,8 +277,9 @@ const ITEMS = [
   de:{t:"Verdunkelungsvorhänge, hellgrau, 2 Stück, 245 × 140 cm", d:"Zwei Ösenvorhänge von CUCRAF in Leinenoptik, dreilagig und komplett verdunkelnd. Halten im Sommer die Hitze draußen und im Winter die Wärme drinnen. Je 245 cm hoch und 140 cm breit. Waschbar bei 30 °C. Gekauft 2025, Neupreis 37 €."},
   en:{t:"Blackout curtains, light grey, set of 2, 245 × 140 cm", d:"Two CUCRAF eyelet curtains in a linen look, three layers and fully blackout. They keep heat out in summer and warmth in during winter. Each 245 cm high and 140 cm wide. Machine washable at 30 °C. Bought in 2025, 37 € new."}},
  {n:21, cat:"office", st:"later", price:150, img:["8240","8241","8242"],
-  de:{t:"Höhenverstellbarer Schreibtisch, elektrisch", d:"Weißer Steh-Sitz-Schreibtisch mit Motor und Speichertasten für mehrere Höhen."},
-  en:{t:"Electric standing desk", d:"White sit-stand desk with motor and memory buttons for several heights."}},
+  link:[{de:"Anleitung Bedienteil", en:"Control panel manual", url:"https://www.kh2004.de/tipps/model-ct08/"}],
+  de:{t:"Höhenverstellbarer Schreibtisch, elektrisch", d:"Weißer Steh-Sitz-Schreibtisch mit Motor. Bedienteil CT08 mit Display für die Höhe, Speichertasten für mehrere Höhen und einem Timer, der dich ans Aufstehen erinnert. Die Bedienungsanleitung für das Bedienteil findest du online."},
+  en:{t:"Electric standing desk", d:"White motorised sit-stand desk. CT08 control panel with a height display, memory buttons for several heights and a timer that reminds you to stand up. You can find the manual for the control panel online."}},
  {n:22, cat:"office", st:"later", price:35, img:["8239"],
   de:{t:"Schreibtisch mit Ablagen, Industrial-Stil", d:"Kompakter Schreibtisch in Holzoptik mit Metallgestell und zwei Ablagen. Verkauf ohne Stuhl und Monitor."},
   en:{t:"Desk with shelves, industrial style", d:"Compact desk in a wood finish with a metal frame and two shelves. Chair and monitor sold separately."}},
@@ -340,9 +342,9 @@ const ITEMS = [
   link:"https://www.amazon.de/dp/B0DWMLMRWQ",
   de:{t:"Roborock Q7 L5+ Saug- und Wischroboter mit Absaugstation", d:"Saugt und wischt. Die Station leert den Staubbehälter automatisch. 8.000 Pa Saugkraft, Laser-Navigation, Steuerung per App. Neupreis zurzeit ca. 180 €."},
   en:{t:"Roborock Q7 L5+ robot vacuum and mop with auto-empty dock", d:"Vacuums and mops. The dock empties the dustbin automatically. 8,000 Pa suction, laser navigation, app control. Currently about 180 € new."}},
- {n:40, cat:"plants", st:"now", price:5, from:true, img:["8207","spiderplant1","spiderplant2","plants_a","plants_e","plants_c","plants_d","8208","plants_g"],
-  de:{t:"Zimmerpflanzen", d:"Ufopflanzen, Wunderstrauch, Efeutute und Grünlilien, mit Topf. Preis je nach Größe."},
-  en:{t:"House plants", d:"Pilea, croton, pothos and spider plants, pots included. Price depends on size."}},
+ {n:40, cat:"plants", st:"now", price:3, pt:{de:"Verschiedene Preise", en:"Various prices"}, img:["8207","spiderplant1","spiderplant2","plants_a","plants_e","plants_c","plants_d","8208","plants_g","plants_h"],
+  de:{t:"Zimmerpflanzen mit Topf", d:"Alle Pflanzen werden mit Topf verkauft. Du erkennst sie am Topf auf den Fotos.\n\nUfopflanzen (Pilea)\n– weißer Keramiktopf mit Rillen: 8 €\n– Terrakottatopf auf gehäkeltem Untersetzer: 6 €\n– kleiner Terrakottatopf mit Untersetzer (weißes Wandregal): 5 €\n\nEfeututen\n– die größte, Terrakottatopf (auf dem Kleiderschrank): 15 €\n– cremefarbener Keramiktopf (auf der Kommode): 12 €\n– Terrakottatopf mit langen Ranken (weißes Wandregal): 10 €\n– Terrakottatopf mit sehr langer Ranke (Holzregal): 10 €\n\nGrünlilien\n– die große im rosa Terrakottatopf: 12 €\n– grauer gemusterter Topf: 10 €\n– schwarzer Hängetopf: 8 €\n– Terrakottatopf auf der Holzkiste: 8 €\n– kleinere Grünlilien: 3 € pro Stück\n\nWunderstrauch (Croton)\n– großer Terrakottatopf mit Untersetzer: 12 €\n– schwarzer Topf: 8 €\n\nWenn du mehrere Pflanzen nimmst, können wir über den Preis reden."},
+  en:{t:"House plants with pots", d:"All plants are sold with their pot. You can recognise them by the pot in the photos.\n\nPilea (Chinese money plant)\n– white ribbed ceramic pot: 8 €\n– terracotta pot on a crocheted coaster: 6 €\n– small terracotta pot with saucer (white wall shelf): 5 €\n\nPothos\n– the biggest, terracotta pot (on the wardrobe): 15 €\n– cream ceramic pot (on the chest of drawers): 12 €\n– terracotta pot with long vines (white wall shelf): 10 €\n– terracotta pot with a very long vine (wooden shelf): 10 €\n\nSpider plants\n– the big one in the pink terracotta pot: 12 €\n– grey patterned pot: 10 €\n– black hanging pot: 8 €\n– terracotta pot on the wooden crate: 8 €\n– smaller spider plants: 3 € each\n\nCroton\n– large terracotta pot with saucer: 12 €\n– black pot: 8 €\n\nIf you take several plants, we can talk about the price."}},
  {n:41, cat:"office", st:"later", price:45, img:["router"],
   link:"https://www.amazon.de/dp/B09N8NJD66",
   de:{t:"FRITZ!Box 7510 WLAN-Router", d:"DSL-Router mit Wi-Fi 6 (bis 600 MBit/s), Mesh, Telefonanlage und Smart-Home-Zentrale. Das Foto ist ein Produktbild. Neupreis ca. 100 €."},
@@ -414,7 +416,14 @@ const ITEMS = [
   en:{t:"Purple jug and small flower vase", d:"Large purple ceramic jug and a small painted vase with a floral pattern. 5 € each."}},
  {n:62, cat:"office", st:"later", price:10, img:["laptopstand"],
   de:{t:"Laptopständer aus Aluminium, silber", d:"Verstellbarer Laptopständer aus Aluminium, bringt den Bildschirm auf Augenhöhe. Laptop nicht inklusive."},
-  en:{t:"Aluminium laptop stand, silver", d:"Adjustable aluminium laptop stand that raises the screen to eye level. Laptop not included."}}
+  en:{t:"Aluminium laptop stand, silver", d:"Adjustable aluminium laptop stand that raises the screen to eye level. Laptop not included."}},
+ {n:63, cat:"kitchen", st:"now", price:50, img:["kitchenaid1","kitchenaid2"],
+  de:{t:"Küchenmaschine KitchenAid (Foodprocessor), schwarz", d:"Foodprocessor von KitchenAid mit Arbeitsschüssel, Messer und Scheiben zum Schneiden und Raspeln. Neupreis ca. 100 €."},
+  en:{t:"KitchenAid food processor, black", d:"KitchenAid food processor with work bowl, blade and discs for slicing and grating. About 100 € new."}},
+ {n:64, cat:"kitchen", st:"now", price:20, img:["smoothie"],
+  link:"https://www.amazon.de/dp/B00I5ABIFI",
+  de:{t:"Smoothie-Mixer WMF Kult Mix & Go Mini, mit 2 To-go-Flaschen", d:"Mixer mit 300 Watt und Edelstahlmesser, mixt direkt in die Trinkflasche (600 ml, mit Skala und Trinkdeckel, spülmaschinenfest). Für Smoothies, Shakes, Nüsse, Gewürze und Eiswürfel. Mit zwei Flaschen. Neupreis ca. 30 €."},
+  en:{t:"WMF Kult Mix & Go Mini smoothie blender, with 2 to-go bottles", d:"300 W blender with a stainless steel blade that mixes straight into the drinking bottle (600 ml, with scale and drinking lid, dishwasher safe). For smoothies, shakes, nuts, spices and ice cubes. Comes with two bottles. About 30 € new."}}
 ];
 
 const CATS = [
@@ -492,7 +501,7 @@ let lang = (navigator.language||"de").toLowerCase().startsWith("de") ? "de" : "e
 let cat = "all", av = "all";
 const $ = s => document.querySelector(s);
 const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-const priceHTML = it => `${it.from ? T[lang].from+" " : ""}${it.price}&nbsp;€${it.from ? "" : ` <small>${T[lang].vb}</small>`}`;
+const priceHTML = it => it.pt ? it.pt[lang] : `${it.from ? T[lang].from+" " : ""}${it.price}&nbsp;€${it.from ? "" : ` <small>${T[lang].vb}</small>`}`;
 
 function renderStatic(){
   const t = T[lang];
