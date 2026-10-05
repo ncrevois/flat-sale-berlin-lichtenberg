@@ -212,6 +212,7 @@ dialog::backdrop{background:rgba(7,10,17,.72)}
    The "Last updated" date is set automatically when you save.
    ============================================================ */
 const UPDATED = {de:"4. Oktober 2026", en:"4 October 2026"};
+const BUILD = "dev"; // set automatically on publish, so changed photos are never shown from an old cache
 const ITEMS = [
  {n:1, cat:"living", st:"reserved", price:45, img:["8195"],
   de:{t:"Plattenspieler mit Holzgehäuse", d:"Plattenspieler im Holz-Look mit Staubschutzhaube. Funktioniert einwandfrei."},
@@ -435,7 +436,7 @@ const T = {
  de:{
   title:"Alles muss raus: Wohnungsauflösung in Berlin",
   h1:"Alles muss raus.",
-  lead:"Wir ziehen nach Chile und verkaufen unsere Wohnungseinrichtung in Berlin: Möbel, Technik, Küche, Balkon und Pflanzen.",
+  lead:"Wir ziehen aus Berlin weg und verkaufen unsere Wohnungseinrichtung: Möbel, Technik, Küche, Balkon und Pflanzen.",
   nowLabel:"Sofort abholbar:", nowText:"kannst du ab jetzt abholen.",
   laterLabel:"Ab Mitte/Ende Oktober:", laterText:"brauchen wir noch bis zum Umzug. Jetzt reservieren, kurz vor unserer Abreise abholen.",
   avAll:"Alle", avNow:"Sofort abholbar", avLater:"Ab Mitte/Ende Oktober",
@@ -463,7 +464,7 @@ const T = {
  en:{
   title:"Everything must go: flat clearance in Berlin",
   h1:"Everything must go.",
-  lead:"We're moving to Chile and selling the contents of our Berlin flat: furniture, tech, kitchen, balcony and plants.",
+  lead:"We're moving out of Berlin and selling the contents of our flat: furniture, tech, kitchen, balcony and plants.",
   nowLabel:"Available now:", nowText:"you can pick it up right away.",
   laterLabel:"From mid/end-October:", laterText:"we still need it until we move. Reserve now, pick up shortly before we leave.",
   avAll:"All", avNow:"Available now", avLater:"From mid/end-October",
@@ -495,7 +496,7 @@ const FORM = "https://docs.google.com/forms/d/e/1FAIpQLSdIlmK7XPM_Rsx1PgjSR-jbQq
 const formLink = it => it ? `${FORM}?usp=pp_url&entry.1976189261=${encodeURIComponent(`#${it.n} ${it.en.t} / ${it.de.t}: `)}` : FORM;
 
 /* Photos live in ./img as <id>.jpg */
-const IMG = new Proxy({}, {get: (_, id) => `img/${String(id)}.jpg`});
+const IMG = new Proxy({}, {get: (_, id) => `img/${String(id)}.jpg?b=${BUILD}`});
 
 let lang = (navigator.language||"de").toLowerCase().startsWith("de") ? "de" : "en";
 let cat = "all", av = "all";

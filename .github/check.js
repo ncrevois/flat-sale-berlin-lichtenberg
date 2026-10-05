@@ -52,6 +52,7 @@ if (process.argv.includes("--stamp")) {
   const d = new Date();
   const fmt = loc => d.toLocaleDateString(loc, {day: "numeric", month: "long", year: "numeric", timeZone: "Europe/Berlin"});
   const line = `const UPDATED = {de:"${fmt("de-DE")}", en:"${fmt("en-GB")}"};`;
-  fs.writeFileSync("index.html", html.replace(/const UPDATED = \{[^}]*\};/, line));
+  const build = `const BUILD = "${Date.now().toString(36)}";`;
+  fs.writeFileSync("index.html", html.replace(/const UPDATED = \{[^}]*\};/, line).replace(/const BUILD = "[^"]*";/, build));
   console.log("Stamped: " + line);
 }
