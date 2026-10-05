@@ -230,15 +230,15 @@ const ITEMS = [
  {n:6, cat:"living", st:"now", price:30, img:["8233"],
   de:{t:"Runder Esstisch mit zwei Stühlen", d:"Runder Holztisch mit zwei passenden Stühlen und Sitzkissen."},
   en:{t:"Round dining table with two chairs", d:"Round wooden table with two matching chairs and seat cushions."}},
- {n:7, cat:"living", st:"now", price:15, img:["8264"],
+ {n:7, cat:"living", st:"now", price:10, img:["8264"],
   de:{t:"Beistelltisch auf Rollen", d:"Beistelltisch in C-Form, passt über Sofa oder Bett. Holzoptik mit schwarzem Metallgestell."},
   en:{t:"Side table on wheels", d:"C-shaped side table that slides over a sofa or bed. Wood finish with a black metal frame."}},
- {n:8, cat:"living", st:"now", price:15, img:["8265"],
-  de:{t:"Laptoptisch mit Glasplatte, weiß", d:"Schmaler Beistell- oder Laptoptisch mit Glasplatte und weißem Metallgestell."},
-  en:{t:"Laptop table with glass top, white", d:"Slim side or laptop table with a glass top and white metal frame."}},
+ {n:8, cat:"living", st:"now", price:10, img:["8265"],
+  de:{t:"Beistelltisch mit Glasplatte, weiß", d:"Schmaler Beistelltisch mit Glasplatte und weißem Metallgestell in C-Form, passt über Sofa oder Bett."},
+  en:{t:"Side table with glass top, white", d:"Slim side table with a glass top and a white C-shaped metal frame that slides over a sofa or bed."}},
  {n:10, cat:"living", st:"now", price:10, img:["8209"],
-  de:{t:"Wandregal, weiß mit Holzkonsolen", d:"Wandbrett in Weiß mit zwei Holzkonsolen. Ohne Pflanzen."},
-  en:{t:"Wall shelf, white with wooden brackets", d:"White wall shelf with two wooden brackets. Plants not included."}},
+  de:{t:"Wandregale, weiß mit Holzkonsolen, 2 Stück", d:"Zwei gleiche Wandbretter in Weiß mit je zwei Holzkonsolen. Preis pro Regal, gern auch beide. Ohne Pflanzen."},
+  en:{t:"Wall shelves, white with wooden brackets, set of 2", d:"Two identical white wall shelves, each with two wooden brackets. Price per shelf, happy to sell both. Plants not included."}},
  {n:11, cat:"office", st:"now", price:40, img:["8215"],
   link:"https://www.ikea.com/de/de/p/vemund-schreib-magnettafel-weiss-50301010/",
   de:{t:"Whiteboard IKEA VEMUND, magnetisch, 140 × 90 cm", d:"Große Schreib- und Magnettafel aus pulverbeschichtetem Stahl, weiß. Zum Beschreiben und für Notizen mit Magneten, für Büro, Küche oder Flur. Zur Wandmontage (Schrauben je nach Wand). Neupreis 80 €."},
@@ -302,9 +302,10 @@ const ITEMS = [
  {n:28, cat:"balcony", st:"now", price:30, img:["8220"],
   de:{t:"Balkonset: Klapptisch und zwei Stühle", d:"Klappbarer Bistrotisch mit zwei Klappstühlen und Sitzkissen."},
   en:{t:"Balcony set: folding table and two chairs", d:"Folding bistro table with two folding chairs and seat cushions."}},
- {n:29, cat:"balcony", st:"now", price:25, img:["8221"],
-  de:{t:"Balkonsessel in Rattanoptik", d:"Schwarzer Sessel in Rattanoptik mit hellen Polstern."},
-  en:{t:"Rattan-style balcony armchair", d:"Black rattan-style armchair with light cushions."}},
+ {n:29, cat:"balcony", st:"now", price:30, img:["8221"],
+  link:[{de:"Kissen", en:"Cushions", url:"https://www.ikea.com/de/de/p/froesoen-duvholmen-stuhlpolster-aussen-beige-s59253439/"}],
+  de:{t:"Balkonsessel in Rattanoptik, mit Kissen", d:"Schwarzer Sessel in Rattanoptik. Inklusive zwei Outdoor-Kissen IKEA FRÖSÖN/DUVHOLMEN in Beige (44 × 44 cm, Neupreis je 15 €). Die Bezüge sind abnehmbar und waschbar bei 40 °C."},
+  en:{t:"Rattan-style balcony armchair, with cushions", d:"Black rattan-style armchair. Includes two IKEA FRÖSÖN/DUVHOLMEN outdoor cushions in beige (44 × 44 cm, 15 € each new). The covers come off and are machine washable at 40 °C."}},
  {n:30, cat:"balcony", st:"now", price:75, img:["8222","8223"],
   link:[{de:"Bank", en:"Bench", url:"https://www.ikea.com/de/de/p/naemmaroe-bank-mit-rueckenlehne-aussen-hellbraun-lasiert-30510302/"},
         {de:"Kissen", en:"Cushions", url:"https://www.amazon.de/dp/B0GKQ12647"}],
@@ -339,7 +340,7 @@ const ITEMS = [
   link:"https://www.amazon.de/dp/B0DWMLMRWQ",
   de:{t:"Roborock Q7 L5+ Saug- und Wischroboter mit Absaugstation", d:"Saugt und wischt. Die Station leert den Staubbehälter automatisch. 8.000 Pa Saugkraft, Laser-Navigation, Steuerung per App. Neupreis zurzeit ca. 180 €."},
   en:{t:"Roborock Q7 L5+ robot vacuum and mop with auto-empty dock", d:"Vacuums and mops. The dock empties the dustbin automatically. 8,000 Pa suction, laser navigation, app control. Currently about 180 € new."}},
- {n:40, cat:"plants", st:"now", price:5, from:true, img:["8207","spiderplant1","spiderplant2","plants_a","plants_b","plants_c","plants_d","plants_e","plants_f","8206","8208","8232"],
+ {n:40, cat:"plants", st:"now", price:5, from:true, img:["8207","spiderplant1","spiderplant2","plants_a","plants_e","plants_c","plants_d","8208","plants_g"],
   de:{t:"Zimmerpflanzen", d:"Ufopflanzen, Wunderstrauch, Efeutute und Grünlilien, mit Topf. Preis je nach Größe."},
   en:{t:"House plants", d:"Pilea, croton, pothos and spider plants, pots included. Price depends on size."}},
  {n:41, cat:"office", st:"later", price:45, img:["router"],
@@ -393,10 +394,10 @@ const ITEMS = [
  {n:56, cat:"kitchen", st:"later", price:10, img:["containers"],
   de:{t:"Vorratsbehälter, 4 Stück, hoch", d:"Vier hohe Vorratsbehälter aus Kunststoff mit Holzdeckel, z. B. für Nudeln, Reis oder Müsli."},
   en:{t:"Storage jars, set of 4, tall", d:"Four tall plastic storage jars with wooden lids, e.g. for pasta, rice or cereal."}},
- {n:57, cat:"living", st:"now", price:400, img:["nebula1","nebula2"],
+ {n:57, cat:"living", st:"now", price:350, img:["nebula1","nebula2"],
   link:"https://www.amazon.de/dp/B0BDCQP6ZZ",
-  de:{t:"Beamer Nebula Capsule 3 Laser (Anker), 1080p", d:"Tragbarer Laser-Beamer in Dosenform (900 g) mit Full HD, 300 ISO-Lumen, Autofokus und Bild bis 120 Zoll. Akku für 2,5 Stunden, 8-W-Lautsprecher mit Dolby Digital, Android TV mit Chromecast. Mit Fernbedienung und Originalkarton. Neupreis ca. 630 €."},
-  en:{t:"Projector Nebula Capsule 3 Laser (Anker), 1080p", d:"Portable can-shaped laser projector (900 g) with Full HD, 300 ISO lumens, autofocus and a picture up to 120 inches. Battery for 2.5 hours, 8 W Dolby Digital speaker, Android TV with Chromecast. With remote and original box. About 630 € new."}},
+  de:{t:"Beamer Nebula Capsule 3 Laser (Anker), 1080p", d:"Tragbarer Laser-Beamer in Dosenform (900 g) mit Full HD, 300 ISO-Lumen, Autofokus und Bild bis 120 Zoll. Akku für 2,5 Stunden, 8-W-Lautsprecher mit Dolby Digital, Android TV mit Chromecast. Mit Fernbedienung und Originalkarton. Neupreis 630 €, zurzeit im Angebot für ca. 440 €."},
+  en:{t:"Projector Nebula Capsule 3 Laser (Anker), 1080p", d:"Portable can-shaped laser projector (900 g) with Full HD, 300 ISO lumens, autofocus and a picture up to 120 inches. Battery for 2.5 hours, 8 W Dolby Digital speaker, Android TV with Chromecast. With remote and original box. 630 € new, currently on sale for about 440 €."}},
  {n:58, cat:"misc", st:"now", price:70, img:["garmin"],
   link:"https://www.garmin.com/de-DE/p/679362/pn/010-02294-70/",
   de:{t:"Smarte Waage Garmin Index S2, schwarz", d:"WLAN-Körperanalysewaage, verbindet sich per WLAN, Bluetooth und ANT+ mit der Garmin-App. Ca. 32 × 31 cm, bis 181 kg. Läuft mit 4 AAA-Batterien bis zu 9 Monate. Neupreis 120 €."},
@@ -410,7 +411,10 @@ const ITEMS = [
   en:{t:"Table lamp with a large vintage-style bulb", d:"Lamp with a concrete-look base and a large vintage-style bulb."}},
  {n:61, cat:"living", st:"now", price:5, img:["jugvase"],
   de:{t:"Krug in Lila und kleine Blumenvase", d:"Großer Keramikkrug in Lila und eine kleine bemalte Vase mit Blumenmuster. 5 € pro Stück."},
-  en:{t:"Purple jug and small flower vase", d:"Large purple ceramic jug and a small painted vase with a floral pattern. 5 € each."}}
+  en:{t:"Purple jug and small flower vase", d:"Large purple ceramic jug and a small painted vase with a floral pattern. 5 € each."}},
+ {n:62, cat:"office", st:"later", price:10, img:["laptopstand"],
+  de:{t:"Laptopständer aus Aluminium, silber", d:"Verstellbarer Laptopständer aus Aluminium, bringt den Bildschirm auf Augenhöhe. Laptop nicht inklusive."},
+  en:{t:"Aluminium laptop stand, silver", d:"Adjustable aluminium laptop stand that raises the screen to eye level. Laptop not included."}}
 ];
 
 const CATS = [
@@ -444,7 +448,7 @@ const T = {
   request:"Diese Sache anfragen",
   dHow:"Wir versuchen, innerhalb von 24 Stunden zu antworten. Eine Anfrage ist noch keine Reservierung.",
   taken:"Diese Sache ist schon vergeben. Schau dir gern die anderen an.",
-  link:"Produktseite ansehen", links:"Produktseiten:",
+  link:"Produktseite ansehen", links:"Produktseiten:", link1:"Produktseite:",
   prev:"Vorheriges Foto", next:"Nächstes Foto", close:"Schließen", cats:"Kategorien", avail:"Verfügbarkeit"
  },
  en:{
@@ -472,7 +476,7 @@ const T = {
   request:"Request this item",
   dHow:"We try to reply within 24 hours. A request is not yet a reservation.",
   taken:"This item is already taken. Have a look at the others.",
-  link:"View product page", links:"Product pages:",
+  link:"View product page", links:"Product pages:", link1:"Product page:",
   prev:"Previous photo", next:"Next photo", close:"Close", cats:"Categories", avail:"Availability"
  }
 };
@@ -537,8 +541,8 @@ function openItem(n){
   $("#dDesc").textContent = it[lang].d;
   const links = [].concat(it.link || []).map(l => typeof l === "string" ? {url: l} : l);
   const a = (u, label) => `<a href="${esc(u)}" target="_blank" rel="noopener noreferrer">${esc(label)}&nbsp;↗</a>`;
-  $("#dLink").innerHTML = links.length === 1 ? a(links[0].url, t.link)
-    : links.length ? `${t.links} ` + links.map(l => a(l.url, l[lang] || new URL(l.url).hostname)).join(" · ") : "";
+  $("#dLink").innerHTML = links.length === 1 && !links[0][lang] ? a(links[0].url, t.link)
+    : links.length ? `${links.length === 1 ? t.link1 : t.links} ` + links.map(l => a(l.url, l[lang] || new URL(l.url).hostname)).join(" · ") : "";
   $("#dLink").hidden = !links.length;
   $("#dHow").innerHTML = (it.st === "now" || it.st === "later")
     ? `<a class="cta" href="${formLink(it)}" target="_blank" rel="noopener noreferrer">${t.request}</a>${t.dHow}`
