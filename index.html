@@ -525,7 +525,9 @@ function renderStatic(){
 
 function renderGrid(){
   const t = T[lang];
-  const list = ITEMS.filter(it => (cat==="all"||it.cat===cat) && (av==="all"||it.st===av));
+  const rank = {reserved:1, sold:2}; // available first, then reserved, then sold
+  const list = ITEMS.filter(it => (cat==="all"||it.cat===cat) && (av==="all"||it.st===av))
+    .sort((a,b) => (rank[a.st]||0) - (rank[b.st]||0));
   $("#count").textContent = t.count(list.length, ITEMS.length);
   $("#grid").innerHTML = list.length ? list.map(it => {
     const gone = it.st==="sold"||it.st==="reserved";
