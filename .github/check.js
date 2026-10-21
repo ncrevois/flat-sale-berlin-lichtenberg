@@ -24,7 +24,7 @@ let ITEMS, CATS, T, UPDATED;
 try { ({ITEMS, CATS, T, UPDATED} = vm.runInNewContext(data + ";({ITEMS, CATS, T, UPDATED})")); }
 catch (e) { console.error("Could not read the item list: " + e.message); process.exit(1); }
 
-const statuses = ["now", "later", "reserved", "sold"];
+const statuses = ["now", "reserved", "sold"];
 const cats = CATS.map(c => c[0]).filter(c => c !== "all");
 const seen = new Set();
 for (const it of ITEMS) {

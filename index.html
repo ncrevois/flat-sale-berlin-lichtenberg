@@ -52,7 +52,7 @@ h1{font-family:var(--display);font-weight:800;font-size:clamp(2.9rem,13vw,6.5rem
 .legend b{font-weight:600}
 .dot{width:.7rem;height:.7rem;border-radius:50%;display:inline-block;flex:none;margin-top:.4rem}
 .flyer .dot{box-shadow:0 0 0 2px var(--flyer-ink)}
-.dot.now{background:#18A368}.dot.later{background:#3D6BE8}.dot.reserved{background:#E08A1E}.dot.sold{background:var(--gone)}
+.dot.now{background:#18A368}.dot.reserved{background:#E08A1E}.dot.sold{background:var(--gone)}
 
 /* tear-off strip: category filter */
 .strip{display:flex;border-top:2px dashed var(--flyer-ink)}
@@ -64,12 +64,8 @@ h1{font-family:var(--display);font-weight:800;font-size:clamp(2.9rem,13vw,6.5rem
 .strip button:focus-visible{outline-offset:-4px;outline-color:var(--flyer-ink)}
 .strip button[aria-pressed="true"]:focus-visible{outline-color:var(--flyer)}
 
-/* availability filter */
+/* count bar */
 .bar{display:flex;flex-wrap:wrap;gap:.75rem 1rem;align-items:center;justify-content:space-between;margin:1.5rem 0 1rem}
-.seg{display:flex;flex-wrap:wrap;gap:.4rem}
-.seg button{border:1.5px solid var(--line);background:var(--card);border-radius:999px;padding:.4rem .85rem;font-size:.9rem;font-weight:500;display:inline-flex;align-items:center;gap:.45rem}
-.seg button .dot{margin:0}
-.seg button[aria-pressed="true"]{border-color:var(--ink);background:var(--ink);color:var(--page)}
 .count{color:var(--muted);font-size:.9rem;margin:0}
 
 /* grid */
@@ -149,7 +145,6 @@ dialog::backdrop{background:rgba(7,10,17,.72)}
       <p class="lead" data-t="lead"></p>
       <ul class="legend">
         <li><span class="dot now"></span><span><b data-t="nowLabel"></b> <span data-t="nowText"></span></span></li>
-        <li><span class="dot later"></span><span><b data-t="laterLabel"></b> <span data-t="laterText"></span></span></li>
       </ul>
     </div>
     <nav class="strip" id="cats" aria-label="Kategorien"></nav>
@@ -157,7 +152,6 @@ dialog::backdrop{background:rgba(7,10,17,.72)}
 
   <main>
     <div class="bar">
-      <div class="seg" id="avail" role="group"></div>
       <p class="count" id="count" aria-live="polite"></p>
     </div>
     <ul class="grid" id="grid"></ul>
@@ -204,8 +198,8 @@ dialog::backdrop{background:rgba(7,10,17,.72)}
 <script>
 /* ============================================================
    ITEMS: the only place item data lives.
-   To change an item, find its line, e.g.  {n:13, ... st:"later", price:120
-     status:  st:"now"  st:"later"  st:"reserved"  st:"sold"
+   To change an item, find its line, e.g.  {n:13, ... st:"now", price:120
+     status:  st:"now"  st:"reserved"  st:"sold"
      price:   price:100   (a plain number, no € sign, no quotes)
    Only change the word or number. Keep the quotes, commas and brackets.
    If something breaks, the old version stays online and GitHub emails you.
@@ -245,7 +239,7 @@ const ITEMS = [
   link:"https://www.ikea.com/de/de/p/vemund-schreib-magnettafel-weiss-50301010/",
   de:{t:"Whiteboard IKEA VEMUND, magnetisch, 140 × 90 cm", d:"Große Schreib- und Magnettafel aus pulverbeschichtetem Stahl, weiß. Zum Beschreiben und für Notizen mit Magneten, für Büro, Küche oder Flur. Zur Wandmontage (Schrauben je nach Wand). Neupreis 80 €."},
   en:{t:"Whiteboard IKEA VEMUND, magnetic, 140 × 90 cm", d:"Large white writing and magnetic board in powder-coated steel. Write on it or pin notes with magnets, for an office, kitchen or hallway. Wall-mounted (screws depend on your wall). 80 € new."}},
- {n:12, cat:"bedroom", st:"later", price:120, img:["8224","8225","slats12"],
+ {n:12, cat:"bedroom", st:"now", price:120, img:["8224","8225","slats12"],
   link:[{de:"Bett", en:"Bed", url:"https://www.ikea.com/de/de/p/malm-bettgestell-hoch-mit-2-schubkaesten-weiss-s59175955/"},
         {de:"Lattenrost", en:"Slatted base", url:"https://www.amazon.de/dp/B00G46MHRI"}],
   de:{t:"Doppelbett IKEA MALM, weiß, mit 2 Schubkästen, 140 × 200 cm", d:"Hohes Bettgestell mit hohem Kopfteil und zwei großen Schubkästen auf Rollen. Sieht von allen Seiten gut aus, passt also auch frei in den Raum. Inklusive Lattenrost von Coemo: 7 Zonen, 28 Federleisten, Rahmen aus Buche, Kopfteil verstellbar. Neupreis zusammen ca. 309 € (Bett mit Schubkästen 209 €, Lattenrost 100 €). Ohne Matratze. Das Lattenrost-Foto ist ein Produktbild."},
@@ -281,14 +275,14 @@ const ITEMS = [
   link:[{de:"Anleitung Bedienteil", en:"Control panel manual", url:"https://www.kh2004.de/tipps/model-ct08/"}],
   de:{t:"Höhenverstellbarer Schreibtisch, elektrisch", d:"Weißer Steh-Sitz-Schreibtisch mit Motor. Bedienteil CT08 mit Display für die Höhe, Speichertasten für mehrere Höhen und einem Timer, der dich ans Aufstehen erinnert. Die Bedienungsanleitung für das Bedienteil findest du online."},
   en:{t:"Electric standing desk", d:"White motorised sit-stand desk. CT08 control panel with a height display, memory buttons for several heights and a timer that reminds you to stand up. You can find the manual for the control panel online."}},
- {n:22, cat:"office", st:"later", price:20, img:["8239"],
+ {n:22, cat:"office", st:"now", price:20, img:["8239"],
   de:{t:"Schreibtisch mit Ablagen, Industrial-Stil", d:"Kompakter Schreibtisch in Holzoptik mit Metallgestell und zwei Ablagen. Verkauf ohne Stuhl und Monitor."},
   en:{t:"Desk with shelves, industrial style", d:"Compact desk in a wood finish with a metal frame and two shelves. Chair and monitor sold separately."}},
  {n:23, cat:"office", st:"now", price:120, img:["8216"],
   link:"https://desktronic.de/products/schreibtischstuhl-sit-one",
   de:{t:"Ergonomischer Bürostuhl Desktronic SitOne, schwarz, mit Garantie bis 2028", d:"Bürostuhl mit atmungsaktivem Netzrücken, Kopfstütze und verstellbaren Armlehnen. Breiter, gepolsterter Sitz, auch für größere Menschen gemacht. Erfüllt die BIFMA-Normen für Haltbarkeit und Sicherheit. Gekauft im August 2025, Neupreis 279 €. Noch Herstellergarantie bis August 2028, die Rechnung bekommst du dazu."},
   en:{t:"Ergonomic office chair Desktronic SitOne, black, with warranty until 2028", d:"Office chair with a breathable mesh back, headrest and adjustable armrests. Wide, padded seat, designed for larger body types too. Meets the BIFMA standards for durability and safety. Bought in August 2025, 279 € new. Still under the manufacturer’s warranty until August 2028, and you get the invoice."}},
- {n:24, cat:"office", st:"later", price:25, img:["8219"],
+ {n:24, cat:"office", st:"now", price:25, img:["8219"],
   de:{t:"Bürostuhl IKEA MILLBERGET, schwarz", d:"Gepolsterter Drehstuhl mit Armlehnen. Gekauft 2021, Neupreis 70 €."},
   en:{t:"Office chair IKEA MILLBERGET, black", d:"Padded swivel chair with armrests. Bought in 2021, 70 € new."}},
  {n:25, cat:"office", st:"sold", price:60, img:["8217","8218"],
@@ -321,13 +315,13 @@ const ITEMS = [
  {n:32, cat:"kitchen", st:"now", price:50, img:["8260","8263"],
   de:{t:"Tefal Pain & Délices Brotbackautomat", d:"Brotbackautomat mit 20 Programmen, auch für Joghurt und Teig."},
   en:{t:"Tefal Pain & Délices bread maker", d:"Bread maker with 20 programmes, also makes yoghurt and dough."}},
- {n:33, cat:"kitchen", st:"later", price:5, img:["8259"],
+ {n:33, cat:"kitchen", st:"now", price:5, img:["8259"],
   de:{t:"Wasserkocher, schwarz", d:"Wasserkocher in Schwarz. Der Toaster auf dem Foto ist schon verkauft."},
   en:{t:"Kettle, black", d:"Black kettle. The toaster in the photo has already been sold."}},
  {n:34, cat:"kitchen", st:"sold", price:45, img:["8257","8256"],
   de:{t:"WMF Messerblock mit Messern und Schere", d:"Holzblock von WMF mit fünf Messern und Küchenschere."},
   en:{t:"WMF knife block with knives and scissors", d:"WMF wooden block with five knives and kitchen scissors."}},
- {n:35, cat:"kitchen", st:"later", price:55, pt:{de:"Verschiedene Preise", en:"Various prices"}, img:["8250","8251","pot","saucepan","8252"],
+ {n:35, cat:"kitchen", st:"now", price:55, pt:{de:"Verschiedene Preise", en:"Various prices"}, img:["8250","8251","pot","saucepan","8252"],
   de:{t:"Küchenpaket: Geschirr, Gläser, Töpfe und Küchenhelfer", d:"Geschirr: je 4 dunkle tiefe Teller, 4 dunkle flache Teller und 4 helle Teller mit braunem Rand, dazu 2 große graue Schüsseln (auf dem Foto sind nicht alle, ein Teil war in der Spülmaschine), Trinkgläser, Tassen, Vorratsdosen aus Glas und Kunststoff, ein Kochtopf und ein Stieltopf aus Edelstahl mit Deckel, Rührschüsseln aus Edelstahl, Reibe und weitere Küchenhelfer. Dazu ein paar Küchensachen, die nicht auf den Fotos sind.\n\nEinzelpreise\n– Tassen und Teller: je 2 €\n– Töpfe: je 10 €\n\nAlles zusammen: 55 €. Sonst können wir über den Preis reden."},
   en:{t:"Kitchen bundle: dishes, glasses, pots and utensils", d:"Dishes: 4 dark deep plates, 4 dark dinner plates and 4 light plates with a brown rim, plus 2 large grey bowls (not all are in the photo, some were in the dishwasher), drinking glasses, mugs, glass and plastic food containers, a stainless steel pot and saucepan with lids, stainless steel mixing bowls, a grater and other utensils. Plus a few kitchen things that aren't in the photos.\n\nSingle prices\n– Cups and plates: 2 € each\n– Pots: 10 € each\n\nEverything together: 55 €. Otherwise we can talk about the price."}},
  {n:36, cat:"kitchen", st:"now", price:10, img:["8204"],
@@ -346,15 +340,15 @@ const ITEMS = [
  {n:40, cat:"plants", st:"now", price:3, pt:{de:"Verschiedene Preise", en:"Various prices"}, img:["n_8207","n_a","n_g","n_h","n_c","n_spider1","n_d","n_e","n_8208"],
   de:{t:"Zimmerpflanzen mit Topf", d:"Alle Pflanzen mit Topf. Die Nummern findest du auf den Fotos.\n\nUfopflanzen (Pilea)\n– Nr. 1, 2, 3 und 11: je 5 €\n\nEfeututen\n– Nr. 4, die größte: 15 €\n– Nr. 5, Nr. 6 und eine weitere ohne Foto: je 10 €\n\nGrünlilien\n– Nr. 7 und 8, in Terrakottatöpfen: je 10 €\n– Nr. 9 und 10: je 5 €\n– Nr. 14, klein, im terrakottafarbenen Kunststofftopf: 3 €\n\nWunderstrauch (Croton)\n– Nr. 12, schwarzer Topf: 8 €\n– Nr. 13, großer Terrakottatopf: 12 €\n\nWenn du mehrere Pflanzen nimmst, können wir über den Preis reden."},
   en:{t:"House plants with pots", d:"All plants come with their pot. You'll find the numbers on the photos.\n\nPilea (Chinese money plant)\n– No. 1, 2, 3 and 11: 5 € each\n\nPothos\n– No. 4, the biggest: 15 €\n– No. 5, No. 6 and one more without a photo: 10 € each\n\nSpider plants\n– No. 7 and 8, in terracotta pots: 10 € each\n– No. 9 and 10: 5 € each\n– No. 14, small, in a terracotta-coloured plastic pot: 3 €\n\nCroton\n– No. 12, black pot: 8 €\n– No. 13, large terracotta pot: 12 €\n\nIf you take several plants, we can talk about the price."}},
- {n:41, cat:"office", st:"later", price:45, img:["router"],
+ {n:41, cat:"office", st:"now", price:45, img:["router"],
   link:"https://www.amazon.de/dp/B09N8NJD66",
   de:{t:"FRITZ!Box 7510 WLAN-Router", d:"DSL-Router mit Wi-Fi 6 (bis 600 MBit/s), Mesh, Telefonanlage und Smart-Home-Zentrale. Das Foto ist ein Produktbild. Neupreis ca. 100 €."},
   en:{t:"FRITZ!Box 7510 Wi-Fi router", d:"DSL router with Wi-Fi 6 (up to 600 Mbps), mesh, phone system and smart home hub. The photo is a product image. About 100 € new."}},
- {n:42, cat:"bedroom", st:"later", price:30, img:["mattress2","mattress"],
+ {n:42, cat:"bedroom", st:"now", price:30, img:["mattress2","mattress"],
   link:"https://www.ikea.com/de/de/p/vesteroey-taschenfederkernmatratze-fest-hellblau-40450618/",
   de:{t:"Matratze IKEA VESTERÖY, 160 × 200 cm", d:"Hat sichtbare Kaffeeflecken auf dem Bezug, siehe erstes Foto.\n\nTaschenfederkernmatratze, fest. Die Taschenfedern reagieren unabhängig voneinander und übertragen keine Bewegungen. Die Federn reichen bis zum Rand: gute Luftzirkulation und guter Komfort, auch wenn zwei Matratzen nebeneinander liegen. Eine Schaumschicht oben erhöht den Liegekomfort. Weicher, gesteppter Stretchbezug mit extra Polsterung, aus 100 % recyceltem Polyester. Federn aus Stahl, Polsterung aus Polyurethan-Schaum. Pflege: absaugen oder mit Polstershampoo reinigen, nicht waschbar. Gekauft 2022, heutiger Neupreis 239 €. Liegt auf dem Massivholzbett (Nr. 13). Das erste Foto zeigt unsere Matratze, das zweite ist ein Produktbild."},
   en:{t:"Mattress IKEA VESTERÖY, 160 × 200 cm", d:"Has visible coffee stains on the cover, see the first photo.\n\nPocket spring mattress, firm. The pocket springs react independently of each other, without passing movement on. The springs reach all the way to the edge: good air circulation and comfort, even with two mattresses side by side. A foam layer on top adds lying comfort. Soft, quilted stretch cover with extra padding, made of 100% recycled polyester. Steel springs, polyurethane foam padding. Care: vacuum or clean with upholstery shampoo, not washable. Bought in 2022, 239 € new today. It's on the solid wood bed (No. 13). The first photo shows our mattress, the second one is a product image."}},
- {n:43, cat:"misc", st:"later", price:500, img:["bike1","bike2"],
+ {n:43, cat:"misc", st:"now", price:500, img:["bike1","bike2"],
   de:{t:"Rennrad Triban RC 500 (Decathlon), Größe L, grau", d:"Endurance-Rennrad mit Microshift-Schaltung und Gepäckträger, Rahmengröße L. Vor etwa einem Jahr bei Decathlon gekauft für 800 € (im Angebot). Sehr gepflegt, keine Mängel. Das ABUS-Kettenschloss (2 Jahre alt) gibt es auf Wunsch für 50 € dazu."},
   en:{t:"Road bike Triban RC 500 (Decathlon), size L, grey", d:"Endurance road bike with Microshift gears and a rear rack, frame size L. Bought at Decathlon about a year ago for 800 € (on offer). Very well looked after, no issues. The ABUS chain lock (2 years old) is available for an extra 50 € if you want it."}},
  {n:44, cat:"misc", st:"reserved", price:35, img:["drill1","drill2"],
@@ -478,13 +472,11 @@ const T = {
   title:"Alles muss raus: Wohnungsauflösung in Berlin",
   h1:"Alles muss raus.",
   lead:"Wir ziehen aus Berlin weg und verkaufen unsere Wohnungseinrichtung: Möbel, Technik, Küche, Balkon und Pflanzen. Abholung in der Storkower Straße 215.",
-  nowLabel:"Sofort abholbar:", nowText:"kannst du ab jetzt abholen.",
-  laterLabel:"Ab Mitte/Ende Oktober:", laterText:"brauchen wir noch bis zum Umzug. Jetzt reservieren, kurz vor unserer Abreise abholen.",
-  avAll:"Alle", avNow:"Sofort abholbar", avLater:"Ab Mitte/Ende Oktober",
-  st:{now:"Sofort abholbar", later:"Ab Mitte/Ende Oktober, jetzt reservierbar", reserved:"Reserviert", sold:"Verkauft"},
+  nowLabel:"Alles ist sofort verfügbar:", nowText:"Abholung diesen Freitag (23.10.) oder Samstag (24.10.).",
+  st:{now:"Verfügbar", reserved:"Reserviert", sold:"Verkauft"},
   no:"Nr.", vb:"VB", from:"ab", photos:"Fotos",
   count:(a,b)=>a===b?`${b} Sachen`:`${a} von ${b} Sachen`,
-  empty:"Mit diesem Filter gibt es hier nichts. Tippe oben auf „Alle“, um alles zu sehen.",
+  empty:"In dieser Kategorie gibt es nichts. Tippe oben auf „Alles“, um alles zu sehen.",
   howTitle:"So läuft es",
   how1:"Tippe auf eine Sache und dann auf „Diese Sache anfragen“. Im Formular schreibst du uns, wie wir dich erreichen, was du möchtest und wann du abholen könntest.",
   how2:"Wir versuchen, innerhalb von 24 Stunden zu antworten. Eine Anfrage ist noch keine Reservierung.",
@@ -492,7 +484,7 @@ const T = {
   requestAll:"Anfrage senden",
   goodTitle:"Gut zu wissen",
   good1:"Preise sind Verhandlungsbasis. Wer mehrere Sachen nimmt, bekommt einen besseren Preis.",
-  good2:"Sachen mit „Ab Mitte/Ende Oktober“ kannst du jetzt schon reservieren. Dafür bitten wir um eine Anzahlung von mindestens 50 %. Erst dann ist die Reservierung fest. Den genauen Abholtag geben wir rechtzeitig durch.",
+  good2:"Abholung diesen Freitag (23.10.) oder Samstag (24.10.). Schreib uns im Formular, welcher Tag dir passt.",
   fine:"Privatverkauf: keine Garantie, keine Rücknahme.",
   privacy:"Datenschutz: Deine Kontaktdaten aus dem Formular nutzen wir nur für diesen Verkauf. Nur wir sehen sie. Nach dem Verkauf löschen wir alles.",
   updated:"Zuletzt aktualisiert am ",
@@ -500,19 +492,17 @@ const T = {
   dHow:"Wir versuchen, innerhalb von 24 Stunden zu antworten. Eine Anfrage ist noch keine Reservierung.",
   taken:"Diese Sache ist schon vergeben. Schau dir gern die anderen an.",
   link:"Produktseite ansehen", links:"Produktseiten:", link1:"Produktseite:",
-  prev:"Vorheriges Foto", next:"Nächstes Foto", close:"Schließen", cats:"Kategorien", avail:"Verfügbarkeit"
+  prev:"Vorheriges Foto", next:"Nächstes Foto", close:"Schließen", cats:"Kategorien"
  },
  en:{
   title:"Everything must go: flat clearance in Berlin",
   h1:"Everything must go.",
   lead:"We're moving out of Berlin and selling the contents of our flat: furniture, tech, kitchen, balcony and plants. Pickup at Storkower Straße 215.",
-  nowLabel:"Available now:", nowText:"you can pick it up right away.",
-  laterLabel:"From mid/end-October:", laterText:"we still need it until we move. Reserve now, pick up shortly before we leave.",
-  avAll:"All", avNow:"Available now", avLater:"From mid/end-October",
-  st:{now:"Available now", later:"From mid/end-October, reserve now", reserved:"Reserved", sold:"Sold"},
+  nowLabel:"Everything is available now:", nowText:"pick up this Friday (23 Oct) or Saturday (24 Oct).",
+  st:{now:"Available", reserved:"Reserved", sold:"Sold"},
   no:"No.", vb:"negotiable", from:"from", photos:"photos",
   count:(a,b)=>a===b?`${b} things`:`${a} of ${b} things`,
-  empty:"Nothing here with this filter. Tap “All” above to see everything.",
+  empty:"Nothing in this category. Tap “All” above to see everything.",
   howTitle:"How it works",
   how1:"Tap an item, then “Request this item”. In the form, tell us how to reach you, what you'd like and when you could pick it up.",
   how2:"We try to reply within 24 hours. A request is not yet a reservation.",
@@ -520,7 +510,7 @@ const T = {
   requestAll:"Send a request",
   goodTitle:"Good to know",
   good1:"Prices are negotiable. Take several things and you get a better price.",
-  good2:"Things marked “From mid/end-October” can be reserved now. For these we ask for a deposit of at least 50%. Only then is the reservation fixed. We'll confirm the exact pickup day in good time.",
+  good2:"Pickup this Friday (23 Oct) or Saturday (24 Oct). Tell us in the form which day suits you.",
   fine:"Private sale: no warranty, no returns.",
   privacy:"Privacy: we only use the contact details from the form for this sale. Only we can see them. We delete everything after the sale.",
   updated:"Last updated ",
@@ -528,7 +518,7 @@ const T = {
   dHow:"We try to reply within 24 hours. A request is not yet a reservation.",
   taken:"This item is already taken. Have a look at the others.",
   link:"View product page", links:"Product pages:", link1:"Product page:",
-  prev:"Previous photo", next:"Next photo", close:"Close", cats:"Categories", avail:"Availability"
+  prev:"Previous photo", next:"Next photo", close:"Close", cats:"Categories"
  }
 };
 
@@ -540,7 +530,7 @@ const formLink = it => it ? `${FORM}?usp=pp_url&entry.1976189261=${encodeURIComp
 const IMG = new Proxy({}, {get: (_, id) => `img/${String(id)}.jpg?b=${BUILD}`});
 
 let lang = (navigator.language||"de").toLowerCase().startsWith("de") ? "de" : "en";
-let cat = "all", av = "all";
+let cat = "all";
 const $ = s => document.querySelector(s);
 const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const priceHTML = it => it.pt ? it.pt[lang] : `${it.from ? T[lang].from+" " : ""}${it.price}&nbsp;€${it.from ? "" : ` <small>${T[lang].vb}</small>`}`;
@@ -556,9 +546,6 @@ function renderStatic(){
   document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
   $("#cats").setAttribute("aria-label", t.cats);
   $("#cats").innerHTML = CATS.map(([id,l]) => `<button type="button" data-cat="${id}" aria-pressed="${id===cat}"><span>${l[lang]}</span></button>`).join("");
-  $("#avail").setAttribute("aria-label", t.avail);
-  $("#avail").innerHTML = [["all",t.avAll,""],["now",t.avNow,"now"],["later",t.avLater,"later"]]
-    .map(([id,l,d]) => `<button type="button" data-av="${id}" aria-pressed="${id===av}">${d?`<span class="dot ${d}"></span>`:""}${l}</button>`).join("");
   $("#prev").setAttribute("aria-label", t.prev);
   $("#next").setAttribute("aria-label", t.next);
   $("#close").setAttribute("aria-label", t.close);
@@ -567,7 +554,7 @@ function renderStatic(){
 function renderGrid(){
   const t = T[lang];
   const rank = {reserved:1, sold:2}; // available first, then reserved, then sold
-  const list = ITEMS.filter(it => (cat==="all"||it.cat===cat) && (av==="all"||it.st===av))
+  const list = ITEMS.filter(it => (cat==="all"||it.cat===cat))
     .sort((a,b) => (rank[a.st]||0) - (rank[b.st]||0));
   $("#count").textContent = t.count(list.length, ITEMS.length);
   $("#grid").innerHTML = list.length ? list.map(it => {
@@ -597,7 +584,7 @@ function openItem(n){
   $("#dLink").innerHTML = links.length === 1 && !links[0][lang] ? a(links[0].url, t.link)
     : links.length ? `${links.length === 1 ? t.link1 : t.links} ` + links.map(l => a(l.url, l[lang] || new URL(l.url).hostname)).join(" · ") : "";
   $("#dLink").hidden = !links.length;
-  $("#dHow").innerHTML = (it.st === "now" || it.st === "later")
+  $("#dHow").innerHTML = it.st === "now"
     ? `<a class="cta" href="${formLink(it)}" target="_blank" rel="noopener noreferrer">${t.request}</a>${t.dHow}`
     : t.taken;
   const dlg = $("#dlg");
@@ -617,7 +604,6 @@ document.addEventListener("click", e => {
   const b = e.target.closest("button"); if(!b) return;
   if(b.dataset.lang){ lang = b.dataset.lang; renderStatic(); renderGrid(); if($("#dlg").open && current) openItem(current.n); }
   else if(b.dataset.cat){ cat = b.dataset.cat; renderStatic(); renderGrid(); }
-  else if(b.dataset.av){ av = b.dataset.av; renderStatic(); renderGrid(); }
   else if(b.dataset.n){ openItem(Number(b.dataset.n)); }
   else if(b.id === "close"){ $("#dlg").close(); }
   else if(b.id === "prev"){ step(-1); }
