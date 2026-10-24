@@ -54,15 +54,6 @@ h1{font-family:var(--display);font-weight:800;font-size:clamp(2.9rem,13vw,6.5rem
 .flyer .dot{box-shadow:0 0 0 2px var(--flyer-ink)}
 .dot.now{background:#18A368}.dot.reserved{background:#E08A1E}.dot.sold{background:var(--gone)}
 
-/* tear-off strip: category filter */
-.strip{display:flex;border-top:2px dashed var(--flyer-ink)}
-.strip button{flex:1 1 0;min-width:0;height:7.25rem;border:0;border-left:2px dashed var(--flyer-ink);background:transparent;color:var(--flyer-ink);padding:.5rem 0;display:flex;align-items:center;justify-content:center}
-.strip button:first-child{border-left:0}
-.strip span{writing-mode:vertical-rl;transform:rotate(180deg);font-family:var(--display);font-weight:700;font-size:1.05rem;letter-spacing:.01em;white-space:nowrap}
-.strip button[aria-pressed="true"]{background:var(--flyer-ink);color:var(--flyer)}
-.strip button:hover:not([aria-pressed="true"]){background:rgba(21,33,59,.1)}
-.strip button:focus-visible{outline-offset:-4px;outline-color:var(--flyer-ink)}
-.strip button[aria-pressed="true"]:focus-visible{outline-color:var(--flyer)}
 
 /* count bar */
 .bar{display:flex;flex-wrap:wrap;gap:.75rem 1rem;align-items:center;justify-content:space-between;margin:1.5rem 0 1rem}
@@ -147,7 +138,6 @@ dialog::backdrop{background:rgba(7,10,17,.72)}
         <li><span class="dot now"></span><span><b data-t="nowLabel"></b> <span data-t="nowText"></span></span></li>
       </ul>
     </div>
-    <nav class="strip" id="cats" aria-label="Kategorien"></nav>
   </header>
 
   <main>
@@ -235,16 +225,16 @@ const ITEMS = [
  {n:10, cat:"living", st:"sold", price:10, img:["8209"],
   de:{t:"Wandregale, weiß mit Holzkonsolen, 2 Stück", d:"Zwei gleiche Wandbretter in Weiß mit je zwei Holzkonsolen. Preis pro Regal, gern auch beide. Ohne Pflanzen."},
   en:{t:"Wall shelves, white with wooden brackets, set of 2", d:"Two identical white wall shelves, each with two wooden brackets. Price per shelf, happy to sell both. Plants not included."}},
- {n:11, cat:"office", st:"now", price:30, img:["8215"],
+ {n:11, cat:"office", st:"now", price:20, img:["8215"],
   link:"https://www.ikea.com/de/de/p/vemund-schreib-magnettafel-weiss-50301010/",
   de:{t:"Whiteboard IKEA VEMUND, magnetisch, 140 × 90 cm", d:"Große Schreib- und Magnettafel aus pulverbeschichtetem Stahl, weiß. Zum Beschreiben und für Notizen mit Magneten, für Büro, Küche oder Flur. Zur Wandmontage (Schrauben je nach Wand). Neupreis 80 €."},
   en:{t:"Whiteboard IKEA VEMUND, magnetic, 140 × 90 cm", d:"Large white writing and magnetic board in powder-coated steel. Write on it or pin notes with magnets, for an office, kitchen or hallway. Wall-mounted (screws depend on your wall). 80 € new."}},
- {n:12, cat:"bedroom", st:"now", price:120, img:["8224","8225","slats12"],
+ {n:12, cat:"bedroom", st:"now", price:100, img:["8224","8225","slats12"],
   link:[{de:"Bett", en:"Bed", url:"https://www.ikea.com/de/de/p/malm-bettgestell-hoch-mit-2-schubkaesten-weiss-s59175955/"},
         {de:"Lattenrost", en:"Slatted base", url:"https://www.amazon.de/dp/B00G46MHRI"}],
   de:{t:"Doppelbett IKEA MALM, weiß, mit 2 Schubkästen, 140 × 200 cm", d:"Hohes Bettgestell mit hohem Kopfteil und zwei großen Schubkästen auf Rollen. Sieht von allen Seiten gut aus, passt also auch frei in den Raum. Inklusive Lattenrost von Coemo: 7 Zonen, 28 Federleisten, Rahmen aus Buche, Kopfteil verstellbar. Neupreis zusammen ca. 309 € (Bett mit Schubkästen 209 €, Lattenrost 100 €). Ohne Matratze. Das Lattenrost-Foto ist ein Produktbild."},
   en:{t:"Double bed IKEA MALM, white, with 2 drawers, 140 × 200 cm", d:"High bed frame with a tall headboard and two large drawers on casters. Looks good from all sides, so it can also stand freely in the room. Coemo slatted base included: 7 zones, 28 flexible slats, beech frame, adjustable head section. About 309 € new together (bed with drawers 209 €, slatted base 100 €). Mattress not included. The slatted base photo is a product image."}},
- {n:13, cat:"bedroom", st:"now", price:120, img:["8235","8236","slats13"],
+ {n:13, cat:"bedroom", st:"now", price:100, img:["8235","8236","slats13"],
   link:[{de:"Bett", en:"Bed", url:"https://www.kaufland.de/product/363142778/"},
         {de:"Lattenrost", en:"Slatted base", url:"https://www.kaufland.de/product/434029574/"}],
   de:{t:"Massivholzbett aus Buche, 160 × 200 cm, mit Lattenrost", d:"Bett „Jana“ von Krok Wood aus massiver Buche, geölt, mit natürlicher Maserung. Ohne Kopfteil. Inklusive Lattenrost von WOODRAM: 56 Federholzleisten, Härte im Lendenbereich verstellbar, belastbar bis 280 kg. Neupreis zusammen ca. 328 € (Bett 230 €, Lattenrost 98 €). Die Matratze verkaufen wir separat (Nr. 42). Sag uns gern, wenn du beides möchtest. Das Lattenrost-Foto ist ein Produktbild."},
@@ -271,10 +261,10 @@ const ITEMS = [
   link:[{de:"Anleitung Bedienteil", en:"Control panel manual", url:"https://www.kh2004.de/tipps/model-ct08/"}],
   de:{t:"Höhenverstellbarer Schreibtisch, elektrisch", d:"Weißer Steh-Sitz-Schreibtisch mit Motor. Bedienteil CT08 mit Display für die Höhe, Speichertasten für mehrere Höhen und einem Timer, der dich ans Aufstehen erinnert. Die Bedienungsanleitung für das Bedienteil findest du online."},
   en:{t:"Electric standing desk", d:"White motorised sit-stand desk. CT08 control panel with a height display, memory buttons for several heights and a timer that reminds you to stand up. You can find the manual for the control panel online."}},
- {n:22, cat:"office", st:"now", price:20, img:["8239"],
+ {n:22, cat:"office", st:"now", price:20, img:["desk1","desk2","8239"],
   de:{t:"Schreibtisch mit Ablagen, Industrial-Stil", d:"Kompakter Schreibtisch in Holzoptik mit Metallgestell und zwei Ablagen. Verkauf ohne Stuhl und Monitor."},
   en:{t:"Desk with shelves, industrial style", d:"Compact desk in a wood finish with a metal frame and two shelves. Chair and monitor sold separately."}},
- {n:23, cat:"office", st:"now", price:120, img:["8216"],
+ {n:23, cat:"office", st:"now", price:100, img:["8216"],
   link:"https://desktronic.de/products/schreibtischstuhl-sit-one",
   de:{t:"Ergonomischer Bürostuhl Desktronic SitOne, schwarz, mit Garantie bis 2028", d:"Bürostuhl mit atmungsaktivem Netzrücken, Kopfstütze und verstellbaren Armlehnen. Breiter, gepolsterter Sitz, auch für größere Menschen gemacht. Erfüllt die BIFMA-Normen für Haltbarkeit und Sicherheit. Gekauft im August 2025, Neupreis 279 €. Noch Herstellergarantie bis August 2028, die Rechnung bekommst du dazu."},
   en:{t:"Ergonomic office chair Desktronic SitOne, black, with warranty until 2028", d:"Office chair with a breathable mesh back, headrest and adjustable armrests. Wide, padded seat, designed for larger body types too. Meets the BIFMA standards for durability and safety. Bought in August 2025, 279 € new. Still under the manufacturer’s warranty until August 2028, and you get the invoice."}},
@@ -336,7 +326,7 @@ const ITEMS = [
  {n:40, cat:"plants", st:"now", price:3, pt:{de:"Verschiedene Preise", en:"Various prices"}, img:["n_8207","n_a","n_g","n_h","n_c","n_spider1","n_d","n_e","n_8208"],
   de:{t:"Zimmerpflanzen mit Topf", d:"Alle Pflanzen mit Topf. Die Nummern findest du auf den Fotos.\n\nUfopflanzen (Pilea)\n– Nr. 1, 2, 3 und 11: je 5 €\n\nEfeututen\n– Nr. 4, die größte: 15 €\n– Nr. 5, Nr. 6 und eine weitere ohne Foto: je 10 €\n\nGrünlilien\n– Nr. 7 und 8, in Terrakottatöpfen: je 10 €\n– Nr. 9 und 10: je 5 €\n– Nr. 14, klein, im terrakottafarbenen Kunststofftopf: 3 €\n\nWunderstrauch (Croton)\n– Nr. 12, schwarzer Topf: 8 €\n– Nr. 13, großer Terrakottatopf: 12 €\n\nWenn du mehrere Pflanzen nimmst, können wir über den Preis reden."},
   en:{t:"House plants with pots", d:"All plants come with their pot. You'll find the numbers on the photos.\n\nPilea (Chinese money plant)\n– No. 1, 2, 3 and 11: 5 € each\n\nPothos\n– No. 4, the biggest: 15 €\n– No. 5, No. 6 and one more without a photo: 10 € each\n\nSpider plants\n– No. 7 and 8, in terracotta pots: 10 € each\n– No. 9 and 10: 5 € each\n– No. 14, small, in a terracotta-coloured plastic pot: 3 €\n\nCroton\n– No. 12, black pot: 8 €\n– No. 13, large terracotta pot: 12 €\n\nIf you take several plants, we can talk about the price."}},
- {n:41, cat:"office", st:"now", price:45, img:["router"],
+ {n:41, cat:"office", st:"now", price:30, img:["router"],
   link:"https://www.amazon.de/dp/B09N8NJD66",
   de:{t:"FRITZ!Box 7510 WLAN-Router", d:"DSL-Router mit Wi-Fi 6 (bis 600 MBit/s), Mesh, Telefonanlage und Smart-Home-Zentrale. Das Foto ist ein Produktbild. Neupreis ca. 100 €."},
   en:{t:"FRITZ!Box 7510 Wi-Fi router", d:"DSL router with Wi-Fi 6 (up to 600 Mbps), mesh, phone system and smart home hub. The photo is a product image. About 100 € new."}},
@@ -344,7 +334,7 @@ const ITEMS = [
   link:"https://www.ikea.com/de/de/p/vesteroey-taschenfederkernmatratze-fest-hellblau-40450618/",
   de:{t:"Matratze IKEA VESTERÖY, 160 × 200 cm", d:"Hat sichtbare Kaffeeflecken auf dem Bezug, siehe erstes Foto.\n\nTaschenfederkernmatratze, fest. Die Taschenfedern reagieren unabhängig voneinander und übertragen keine Bewegungen. Die Federn reichen bis zum Rand: gute Luftzirkulation und guter Komfort, auch wenn zwei Matratzen nebeneinander liegen. Eine Schaumschicht oben erhöht den Liegekomfort. Weicher, gesteppter Stretchbezug mit extra Polsterung, aus 100 % recyceltem Polyester. Federn aus Stahl, Polsterung aus Polyurethan-Schaum. Pflege: absaugen oder mit Polstershampoo reinigen, nicht waschbar. Gekauft 2022, heutiger Neupreis 239 €. Liegt auf dem Massivholzbett (Nr. 13). Das erste Foto zeigt unsere Matratze, das zweite ist ein Produktbild."},
   en:{t:"Mattress IKEA VESTERÖY, 160 × 200 cm", d:"Has visible coffee stains on the cover, see the first photo.\n\nPocket spring mattress, firm. The pocket springs react independently of each other, without passing movement on. The springs reach all the way to the edge: good air circulation and comfort, even with two mattresses side by side. A foam layer on top adds lying comfort. Soft, quilted stretch cover with extra padding, made of 100% recycled polyester. Steel springs, polyurethane foam padding. Care: vacuum or clean with upholstery shampoo, not washable. Bought in 2022, 239 € new today. It's on the solid wood bed (No. 13). The first photo shows our mattress, the second one is a product image."}},
- {n:43, cat:"misc", st:"now", price:500, img:["bike1","bike2"],
+ {n:43, cat:"misc", st:"now", price:450, img:["bike1","bike2"],
   de:{t:"Rennrad Triban RC 500 (Decathlon), Größe L, grau", d:"Endurance-Rennrad mit Microshift-Schaltung und Gepäckträger, Rahmengröße L. Vor etwa einem Jahr bei Decathlon gekauft für 800 € (im Angebot). Sehr gepflegt, keine Mängel. Das ABUS-Kettenschloss (2 Jahre alt) gibt es auf Wunsch für 50 € dazu."},
   en:{t:"Road bike Triban RC 500 (Decathlon), size L, grey", d:"Endurance road bike with Microshift gears and a rear rack, frame size L. Bought at Decathlon about a year ago for 800 € (on offer). Very well looked after, no issues. The ABUS chain lock (2 years old) is available for an extra 50 € if you want it."}},
  {n:44, cat:"misc", st:"sold", price:35, img:["drill1","drill2"],
@@ -426,10 +416,6 @@ const ITEMS = [
  {n:68, cat:"living", st:"sold", price:10, img:["hooks1","hooks2"],
   de:{t:"Hakenleiste mit 5 Doppelhaken, cremeweiß", d:"Holzleiste in Cremeweiß mit fünf schwarzen Doppelhaken aus Metall, für Jacken, Taschen oder Schlüssel. Zum Anschrauben an die Wand."},
   en:{t:"Coat hook rail with 5 double hooks, cream white", d:"Cream-white wooden rail with five black metal double hooks, for jackets, bags or keys. Screws onto the wall."}},
- {n:69, cat:"misc", st:"now", price:15, img:["bikebag"],
-  link:"https://www.amazon.de/dp/B0BSG5JDKX",
-  de:{t:"Lenkertasche Rovativ für Bikepacking, 3 Liter, wasserdicht", d:"Wasserdichte Lenkertasche aus robustem TPU-Material mit Rollverschluss und Schultergurt, für Gravelbike, Rennrad und MTB. In perfektem Zustand. Das Foto ist ein Produktbild."},
-  en:{t:"Rovativ bikepacking handlebar bag, 3 L, waterproof", d:"Waterproof handlebar bag in tough TPU fabric with a roll-top closure and shoulder strap, for gravel, road and mountain bikes. In perfect condition. The photo is a product image."}},
  {n:70, cat:"misc", st:"sold", price:120, img:["skate1","skate2","skate3"],
   de:{t:"Surfskate Slide, 32 Zoll, blau", d:"Surfskate von Slide, 32″ × 10,25″ (ca. 81 × 26 cm), mit beweglicher Surf-Achse vorne und weichen, breiten Slide-Rollen. Gebraucht, mit Gebrauchsspuren an Kanten, Griptape und Rollen, Aufkleber auf der Unterseite."},
   en:{t:"Slide surfskate, 32 inch, blue", d:"Slide surfskate, 32″ × 10.25″ (about 81 × 26 cm), with a swivelling surf truck at the front and soft, wide Slide wheels. Used, with signs of wear on the edges, grip tape and wheels, stickers on the underside."}},
@@ -465,7 +451,7 @@ const T = {
   title:"Alles muss raus: Wohnungsauflösung in Berlin",
   h1:"Alles muss raus.",
   lead:"Wir ziehen aus Berlin weg und verkaufen unsere Wohnungseinrichtung: Möbel, Technik, Küche, Balkon und Pflanzen. Abholung in der Storkower Straße 215.",
-  nowLabel:"Alles ist sofort verfügbar:", nowText:"Abholung diesen Freitag (23.10.) oder Samstag (24.10.).",
+  nowLabel:"Alles ist sofort verfügbar:", nowText:"Abholung diesen Samstag (24.10.) oder Sonntag (25.10.).",
   st:{now:"Verfügbar", reserved:"Reserviert", sold:"Verkauft"},
   no:"Nr.", vb:"VB", from:"ab", photos:"Fotos",
   count:(a,b)=>a===b?`${b} Sachen`:`${a} von ${b} Sachen`,
@@ -477,7 +463,7 @@ const T = {
   requestAll:"Anfrage senden",
   goodTitle:"Gut zu wissen",
   good1:"Preise sind Verhandlungsbasis. Wer mehrere Sachen nimmt, bekommt einen besseren Preis.",
-  good2:"Abholung diesen Freitag (23.10.) oder Samstag (24.10.). Schreib uns im Formular, welcher Tag dir passt.",
+  good2:"Abholung diesen Samstag (24.10.) oder Sonntag (25.10.). Schreib uns im Formular, welcher Tag dir passt.",
   fine:"Privatverkauf: keine Garantie, keine Rücknahme.",
   privacy:"Datenschutz: Deine Kontaktdaten aus dem Formular nutzen wir nur für diesen Verkauf. Nur wir sehen sie. Nach dem Verkauf löschen wir alles.",
   updated:"Zuletzt aktualisiert am ",
@@ -491,7 +477,7 @@ const T = {
   title:"Everything must go: flat clearance in Berlin",
   h1:"Everything must go.",
   lead:"We're moving out of Berlin and selling the contents of our flat: furniture, tech, kitchen, balcony and plants. Pickup at Storkower Straße 215.",
-  nowLabel:"Everything is available now:", nowText:"pick up this Friday (23 Oct) or Saturday (24 Oct).",
+  nowLabel:"Everything is available now:", nowText:"pick up this Saturday (24 Oct) or Sunday (25 Oct).",
   st:{now:"Available", reserved:"Reserved", sold:"Sold"},
   no:"No.", vb:"negotiable", from:"from", photos:"photos",
   count:(a,b)=>a===b?`${b} things`:`${a} of ${b} things`,
@@ -503,7 +489,7 @@ const T = {
   requestAll:"Send a request",
   goodTitle:"Good to know",
   good1:"Prices are negotiable. Take several things and you get a better price.",
-  good2:"Pickup this Friday (23 Oct) or Saturday (24 Oct). Tell us in the form which day suits you.",
+  good2:"Pickup this Saturday (24 Oct) or Sunday (25 Oct). Tell us in the form which day suits you.",
   fine:"Private sale: no warranty, no returns.",
   privacy:"Privacy: we only use the contact details from the form for this sale. Only we can see them. We delete everything after the sale.",
   updated:"Last updated ",
@@ -523,7 +509,6 @@ const formLink = it => it ? `${FORM}?usp=pp_url&entry.1976189261=${encodeURIComp
 const IMG = new Proxy({}, {get: (_, id) => `img/${String(id)}.jpg?b=${BUILD}`});
 
 let lang = (navigator.language||"de").toLowerCase().startsWith("de") ? "de" : "en";
-let cat = "all";
 const $ = s => document.querySelector(s);
 const esc = s => s.replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
 const priceHTML = it => it.pt ? it.pt[lang] : `${it.from ? T[lang].from+" " : ""}${it.price}&nbsp;€${it.from ? "" : ` <small>${T[lang].vb}</small>`}`;
@@ -537,8 +522,6 @@ function renderStatic(){
     el.textContent = k === "updated" ? t.updated + UPDATED[lang] + "." : t[k];
   });
   document.querySelectorAll(".lang button").forEach(b => b.setAttribute("aria-pressed", String(b.dataset.lang === lang)));
-  $("#cats").setAttribute("aria-label", t.cats);
-  $("#cats").innerHTML = CATS.map(([id,l]) => `<button type="button" data-cat="${id}" aria-pressed="${id===cat}"><span>${l[lang]}</span></button>`).join("");
   $("#prev").setAttribute("aria-label", t.prev);
   $("#next").setAttribute("aria-label", t.next);
   $("#close").setAttribute("aria-label", t.close);
@@ -547,7 +530,7 @@ function renderStatic(){
 function renderGrid(){
   const t = T[lang];
   const rank = {reserved:1, sold:2}; // available first, then reserved, then sold
-  const list = ITEMS.filter(it => (cat==="all"||it.cat===cat))
+  const list = ITEMS.slice()
     .sort((a,b) => (rank[a.st]||0) - (rank[b.st]||0));
   $("#count").textContent = t.count(list.length, ITEMS.length);
   $("#grid").innerHTML = list.length ? list.map(it => {
@@ -596,7 +579,6 @@ function step(d){ const g = $("#gal"); g.scrollBy({left: d*g.clientWidth, behavi
 document.addEventListener("click", e => {
   const b = e.target.closest("button"); if(!b) return;
   if(b.dataset.lang){ lang = b.dataset.lang; renderStatic(); renderGrid(); if($("#dlg").open && current) openItem(current.n); }
-  else if(b.dataset.cat){ cat = b.dataset.cat; renderStatic(); renderGrid(); }
   else if(b.dataset.n){ openItem(Number(b.dataset.n)); }
   else if(b.id === "close"){ $("#dlg").close(); }
   else if(b.id === "prev"){ step(-1); }
